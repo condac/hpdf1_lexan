@@ -3,6 +3,8 @@
 use <lexan_main-chassie.scad>
 use <lexan_nose.scad>
 use <lexan_side_stab.scad>
+use <lexan_steering_hub.scad>
+use <bodyposts.scad>
 
 param1=0;   // must be initalised
 len=param1; // param1 passed via -D on cmd-line
@@ -66,4 +68,13 @@ module side_stab_x2() {
     side_stab_p();
     translate([8,-8,0])side_stab_p();
 }
+module steering_hubs() {
+    steeringhubs_p();
+}
 //side_stab_x2();
+//body_posts();
+module body_posts() {
+    translate([0,0,0]) body_post_p();
+    translate([0,7,0]) body_post_p();
+    translate([0,14,0]) body_post_p();
+}

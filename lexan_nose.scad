@@ -1,8 +1,10 @@
 use <lexan_main-chassie.scad>;
+use <caster_hub.scad>;
 //basefornewnose
 //%translate([28, -60, 0])  rotate([0,0,180]) import("basefornewnose.stl", convexity=10);
 
 // main-chassie
+translate([-62,240-25,23]) %caster_p();
 %main_chassie_p();
 %nose_plate_p();
 //%translate([28, -65, 0])  rotate([0,0,180]) import("main.stl", convexity=10);
