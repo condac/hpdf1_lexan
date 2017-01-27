@@ -5,7 +5,7 @@ $fs=0.1;
 caster = 4;
 camber = 2;
 
-kingpin_d = 3.1;
+kingpin_d = 3.4;
 
 space = 19; // mellanrummet inuti hubben
 
@@ -60,4 +60,19 @@ module caster_p() {
         
         translate([-25, 10, -25]) rotate([0,0,-10]) cube([50,50,50,]);
     }
+}
+module caster_rod() {
+
+    rotate([0,camber,0]) rotate([caster,0,0]) translate([0,0,-50]) cylinder(d=kingpin_d, h = 100);
+    //%rotate([0,camber,0]) rotate([caster,0,0]) translate([0,0,-50]) cylinder(d=kingpin_d, h = 100);
+        
+
+}
+caster_rod();
+
+module caster_visual() {
+    
+     rotate([0,0,180]) translate([-90, 275, -20])  %import("ref/testhub.stl", convexity=10);
+ rotate([0,0,180+45]) translate([-90, 275, -20])  %import("ref/testhub.stl", convexity=10);
+ rotate([0,0,180-30]) translate([-90, 275, -20])  %import("ref/testhub.stl", convexity=10);
 }

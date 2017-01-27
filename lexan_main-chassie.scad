@@ -473,15 +473,15 @@ module sido_dampare() {
 }
 
 module flat_screw_tap(l = 10) {
-    tap_z = 1;
+    tap_z = 1.1;
     cylinder(d = m3_d_s, h= l);
-    translate([0,0,l-tap_z]) cylinder(d1 = m3_d_s, d2= m3_d_s+2, h= tap_z);
+    translate([0,0,l-tap_z+0.1]) cylinder(d1 = m3_d_s, d2= 6, h= tap_z);
 }
 
 module flat_screw(l = 10) {
-    tap_z = 1;
+    tap_z = 1.1;
     cylinder(d = m3_d, h= l);
-    translate([0,0,l-tap_z]) cylinder(d1 = m3_d, d2= m3_d+2, h= tap_z);
+    translate([0,0,l-tap_z+0.1]) cylinder(d1 = m3_d, d2= 6, h= tap_z);
 }
 
 module screw_tap(l = 10) {

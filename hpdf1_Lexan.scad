@@ -3,6 +3,7 @@
 use <lexan_main-chassie.scad>
 use <lexan_nose.scad>
 use <lexan_side_stab.scad>
+use <caster_hub.scad>
 
 color("green") side_spring_plate_p();
 
@@ -26,6 +27,7 @@ translate([0,240,0]) union() {
 
     lower_arm();
     mirror([1,0,0]) lower_arm();
+    translate([-63, -25, 25]) caster_visual();
 
     color("yellow") arm_plate();
     color("green") translate([0,-115,30]) upper_arm_plate_p();

@@ -5,7 +5,7 @@ use <lexan_nose.scad>
 use <lexan_side_stab.scad>
 use <lexan_steering_hub.scad>
 use <bodyposts.scad>
-
+use <wingadapter.scad>
 param1=0;   // must be initalised
 len=param1; // param1 passed via -D on cmd-line
 echo(len,param1);
@@ -76,5 +76,15 @@ module steering_hubs() {
 module body_posts() {
     translate([0,0,0]) body_post_p();
     translate([0,7,0]) body_post_p();
-    translate([0,14,0]) body_post_p();
+    translate([0,15,0]) body_post2_p();
+}
+//wind_adapter();
+module wing_adapter() {
+    wingadapter_p();
+    
+}
+//arm_pin();
+module arm_pin() {
+    arm_pin_p();
+    translate([0,8,0]) arm_pin_p();
 }

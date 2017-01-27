@@ -4,7 +4,7 @@ use <caster_hub.scad>;
 //%translate([28, -60, 0])  rotate([0,0,180]) import("basefornewnose.stl", convexity=10);
 
 // main-chassie
-translate([-62,240-25,23]) %caster_p();
+//translate([-62,240-25,23]) %caster_p();
 %main_chassie_p();
 %nose_plate_p();
 //%translate([28, -65, 0])  rotate([0,0,180]) import("main.stl", convexity=10);
@@ -157,8 +157,8 @@ module nose_p() {
         translate([0,n_y-wf_y,-1]) cylinder(d=4.2, h= n_z*2);
         translate([0,n_y-wf_y-wf_dist,-1]) cylinder(d=4.2, h= n_z*2);
         
-        translate([0,n_y-wf_y,-1]) cylinder(d1=10, d2=4.2,  h=2.5);
-        translate([0,n_y-wf_y-wf_dist,-1]) cylinder(d1=10, d2=4.2, h= 2.5);
+        translate([0,n_y-wf_y,-1]) cylinder(d1=11, d2=4.2,  h=3.5);
+        translate([0,n_y-wf_y-wf_dist,-1]) cylinder(d1=11, d2=4.2, h= 3.5);
         
     }
 }
@@ -212,6 +212,13 @@ ua1_y = 32;
 ua2_x = 16;
 ua2_y = 83;
 
+
+module arm_pin_p() {
+    difference() {
+        translate([-52, -25, 14]) cylinder(d=m3_d_s+0.8*4, h=36.5-14-4);
+        translate([-52, -25, 14]) cylinder(d=m3_d_s, h=36.5-14-4);
+    }
+}
 module lower_arm() {
     z_w = 3.5;
     z_z = 14;
@@ -224,11 +231,14 @@ module lower_arm() {
             }
             hull() {
                 translate([-la2_x, -la2_y, z_z-z_w]) cylinder(d=6, h=z_w);
-                translate([-62, -25, z_z-z_w]) cylinder(d=10, h=z_w);
+                translate([-52, -25, z_z-z_w]) cylinder(d=10, h=z_w);
             }
         }
         lower_arm_mount_cut(dd=m3_d);
-        translate([-62, -25, z_z-z_w]) cylinder(d=3.3, h=z_w);
+        //translate([-62, -25, z_z-z_w]) cylinder(d=3.3, h=z_w);
+        translate([-63, -23, 0]) caster_rod();
+        translate([-52, -25, z_z-z_w]) cylinder(d=m3_d, h=z_w);
+        %arm_pin_p();
     }
 }
 module lower_arm_mount() {
@@ -240,7 +250,7 @@ module lower_arm_mount_cut(dd=3) {
     z_z = 14;
     translate([-la1_x, -la1_y, z_z-z_w]) cylinder(d=dd, h=z_w);
     translate([-la2_x, -la2_y, z_z-z_w]) cylinder(d=dd, h=z_w);
-    translate([-62, -25, z_z-z_w]) cylinder(d=dd, h=z_w);
+    //translate([-62, -25, z_z-z_w]) cylinder(d=dd, h=z_w);
     translate([-la1_x, -la1_y, 11]) rotate([180,0,0]) flat_screw_tap(l=11.1);
     translate([-la2_x, -la2_y, 11]) rotate([180,0,0]) flat_screw_tap(l=11.1);
     
@@ -279,10 +289,10 @@ module upper_arm() {
             
         }
         upper_arm_mount_cut(dd=m3_d);
-        translate([-62, -25, z_z-z_w]) cylinder(d=3.3, h=z_w);
+        //translate([-62, -25, z_z-z_w]) cylinder(d=3.3, h=z_w);
+        translate([-52, -25, z_z-z_w]) cylinder(d=m3_d, h=z_w);
         
-        
-        
+        translate([-63, -23, 0]) caster_rod();
     }
 }
 module upper_arm_mount() {
@@ -295,7 +305,7 @@ module upper_arm_mount_cut(dd=3) {
     z_z = 36.5;
     translate([-ua1_x, -ua1_y, 0]) cylinder(d=dd, h=z_w+15+z_z);
     translate([-ua2_x, -ua2_y, 0]) cylinder(d=dd, h=z_w+15+z_z);
-    translate([-62, -25, z_z-z_w])  cylinder(d=dd, h=z_w);
+    //translate([-62, -25, z_z-z_w])  cylinder(d=dd, h=z_w);
     translate([-ua1_x, -ua1_y, 11]) rotate([180,0,0]) flat_screw_tap(l=11.1);
     translate([-ua2_x, -ua2_y, 11]) rotate([180,0,0]) flat_screw_tap(l=11.1);
     
@@ -428,13 +438,13 @@ module sido_dampare() {
 module flat_screw_tap(l = 10) {
     tap_z = 1.2;
     cylinder(d = m3_d_s, h= l);
-    translate([0,0,l-tap_z]) cylinder(d1 = m3_d_s, d2= m3_d_s+2.2, h= tap_z);
+    translate([0,0,l-tap_z]) cylinder(d1 = m3_d_s, d2= 6, h= tap_z);
 }
 
 module flat_screw(l = 10) {
     tap_z = 1.2;
     cylinder(d = m3_d, h= l);
-    translate([0,0,l-tap_z]) cylinder(d1 = m3_d, d2= m3_d+2.2, h= tap_z);
+    translate([0,0,l-tap_z]) cylinder(d1 = m3_d, d2= 6, h= tap_z);
 }
 
 module screw_tap(l = 10) {
