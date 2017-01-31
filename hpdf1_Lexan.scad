@@ -4,6 +4,7 @@ use <lexan_main-chassie.scad>
 use <lexan_nose.scad>
 use <lexan_side_stab.scad>
 use <caster_hub.scad>
+use <wingadapter.scad>
 
 color("green") side_spring_plate_p();
 
@@ -31,7 +32,10 @@ translate([0,240,0]) union() {
 
     color("yellow") arm_plate();
     color("green") translate([0,-115,30]) upper_arm_plate_p();
+    
+    translate([0, -25.5, 10+4]) rotate([0,180,0]) wingadapter_p();
 }
+
 
 //body post
 

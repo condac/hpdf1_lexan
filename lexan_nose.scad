@@ -160,6 +160,9 @@ module nose_p() {
         translate([0,n_y-wf_y,-1]) cylinder(d1=11, d2=4.2,  h=3.5);
         translate([0,n_y-wf_y-wf_dist,-1]) cylinder(d1=11, d2=4.2, h= 3.5);
         
+        //hål för att kunna skruva bodypost i vingfästet
+        translate([0,n_y-1.5,0]) cylinder(d=6.5, h=n_z);
+        
     }
 }
 

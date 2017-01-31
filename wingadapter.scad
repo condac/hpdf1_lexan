@@ -27,11 +27,11 @@ module wingadapter_p() {
                 union() {
                     hull() {
                         translate([0,0,0]) cylinder(d = yd, h=hh);
-                        translate([0,s_dist,0]) cylinder(d = yd, h=hh);
+                        translate([0,s_dist,0]) cylinder(d = yd+5, h=hh);
                         translate([0,post_dist,0]) cylinder(d = yd, h=hh);
                     }
                     hull() {
-                        translate([0,s_dist,0]) cylinder(d = yd, h=hh);
+                        translate([0,s_dist,0]) cylinder(d = yd+5, h=hh);
                         translate([-xx/2,lip_dist,0]) cube([xx, 6, hh]);
                         translate([0,mount_dist,0]) cylinder(d = 3, h=hh);
                     }

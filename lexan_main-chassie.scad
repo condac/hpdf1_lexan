@@ -183,6 +183,8 @@ module main_chassie_p() {
         
         bak_screw_cut();
         
+        radio_tub_cut();
+        
         translate([-10,0,0]) bak_screw_cut();
         translate([10,0,0]) bak_screw_cut();
         
@@ -213,7 +215,7 @@ module radio_tub_cut() {
     yy = 30;
     wall = 0.4*3;
     
-        translate([-xx/2+wall, wall, 2]) cube([xx-wall*2,yy-wall*2,b_z]);
+    translate([0,batteri_x+bakre_wall+13,0]) translate([-xx/2+wall, wall, 2]) cube([xx-wall*2,yy-wall*2,b_z]);
      
     
 }
