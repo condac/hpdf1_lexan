@@ -49,10 +49,10 @@ module upper_arms() {
     upper_arm();
     translate([-105,-88,0]) rotate([0,0,70]) mirror([1,0,0]) upper_arm(); //  
 }
-
+//lower_arms();
 module lower_arms() {
     lower_arm();
-    translate([-80,-100,0]) rotate([0,0,180]) lower_arm();
+    translate([-40,8,0]) rotate([0,0,130]) translate([-50,50,0])   mirror([1,0,0]) lower_arm();
 }
 
 module lower_arm_plate() {

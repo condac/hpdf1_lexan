@@ -5,7 +5,7 @@ $fs=0.1;
 caster = 4;
 camber = 2;
 
-kingpin_d = 3.4;
+kingpin_d = 3.5;
 
 space = 19; // mellanrummet inuti hubben
 

@@ -41,7 +41,7 @@ bakre_wall = 6;
 //plattan
 p_x = 100/2; // bredden på plattan delat med 2
 p_b_x = 90/2; // bredden på plattan bak
-p_y = 92;
+p_y = 100;
 p_z = 2;
 p_offset_z = 0;
 p_bak_offset = 7;
@@ -149,6 +149,22 @@ module main_chassie_p() {
             plate_posts(pp2_x, pp2_y, pp2_z, m3_d_s+0.4*13);
             %plate_posts(pp3_x, pp3_y, pp3_z, m3_d_s+0.4*13);
             //plate_posts(pp4_x, pp4_y, pp4_z, 8);
+            
+            // Förstärkning sidofjäder post
+            hull() {
+                translate([pp1_x, bakre_wall+1, pp1_z-1]) cube([1,3,1]);
+                translate([batteri_y/2,bakre_wall+1,b_z]) cube([1,3,1]);
+                translate([batteri_x/2,bakre_wall+1,b_z]) cube([1,3,1]);
+            }
+            hull() {
+                translate([-pp1_x, bakre_wall+1, pp1_z-1]) cube([1,3,1]);
+                translate([-batteri_y/2-1,bakre_wall+1,b_z]) cube([1,3,1]);
+                translate([-batteri_x/2-1,bakre_wall+1,b_z]) cube([1,3,1]);
+            }
+            
+            // Radio tub
+            radio_tub();
+            
         }
         translate([batteri_y/2, bakre_wall+4, b_offset_z]) rotate([0,0,90]) batteri();
         translate([-batteri_x/2, bakre_wall, b_offset_z]) rotate([0,0,0]) batteri();
@@ -181,6 +197,26 @@ module main_chassie_p() {
             }
 }
 
+module radio_tub() {
+    xx = batteri_y;
+    yy = 30;
+    wall = 0.4*3;
+    translate([0,batteri_x+bakre_wall+13,0]) difference() {
+        translate([-xx/2, 0, 0]) cube([xx,yy,b_z]);
+        translate([-xx/2+wall, wall, 2]) cube([xx-wall*2,yy-wall*2,b_z]);
+        
+    }
+    
+}
+module radio_tub_cut() {
+    xx = batteri_y;
+    yy = 30;
+    wall = 0.4*3;
+    
+        translate([-xx/2+wall, wall, 2]) cube([xx-wall*2,yy-wall*2,b_z]);
+     
+    
+}
 module side_spring_plate_p() {
     difference() {
         union() {
@@ -276,7 +312,7 @@ module receiver_plate_p() {
 module nose_plate_p() {
     translate([0,0,4]) difference() {
         union() {
-            translate([0,108,0]) crossplate(15, 15, 25, 2, 3);
+            translate([0,108,0]) crossplate(15, 15, 25, 4, 3);
             translate([-15,108,0]) cylinder(d=6, h=4);
             translate([15,108,0]) cylinder(d=6, h=4);
             translate([-15,108+25,0]) cylinder(d=6, h=4);
@@ -452,6 +488,7 @@ module sido_fasten() {
     }
     
 }
+
 
 module sido_fjadrar() {
     extra_x = s_x - batteri_x/2;
