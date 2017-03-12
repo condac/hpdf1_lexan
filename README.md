@@ -1,6 +1,6 @@
-# THIS CAR IS NEVER TESTED ON TRACK!!! (yet..)
+# Work in progress
 
-Still very much work in progress. Will test it soon.
+Still very much work in progress. Car is only tested on track a few times. But it is good enough to keep up with brand named cars if you are a good driver. 
 
 # HPD F1 Lexan version
 Custom version of the HPD F1 to use lexan body. 
