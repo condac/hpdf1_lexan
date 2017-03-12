@@ -41,3 +41,5 @@ translate([0,240,0]) union() {
 
 //translate([70/2,240-2-180,0]) cylinder (d=5, h=50);
 //translate([-70/2,240-2-180,0]) cylinder (d=5, h=50);
+
+translate([-115, -67, -93])  rotate([0,-90,-90]) import("ref/Cradle.stl", convexity=10);

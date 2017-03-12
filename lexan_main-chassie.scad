@@ -201,9 +201,9 @@ module main_chassie_p() {
 
 module radio_tub() {
     xx = batteri_y;
-    yy = 30;
+    yy = 35;
     wall = 0.4*3;
-    translate([0,batteri_x+bakre_wall+13,0]) difference() {
+    translate([0,batteri_x+bakre_wall+10,0]) difference() {
         translate([-xx/2, 0, 0]) cube([xx,yy,b_z]);
         translate([-xx/2+wall, wall, 2]) cube([xx-wall*2,yy-wall*2,b_z]);
         
@@ -212,10 +212,10 @@ module radio_tub() {
 }
 module radio_tub_cut() {
     xx = batteri_y;
-    yy = 30;
+    yy = 34;
     wall = 0.4*3;
     
-    translate([0,batteri_x+bakre_wall+13,0]) translate([-xx/2+wall, wall, 2]) cube([xx-wall*2,yy-wall*2,b_z]);
+    translate([0,batteri_x+bakre_wall+11,0]) translate([-xx/2+wall, wall, 2]) cube([xx-wall*2,yy-wall*2,b_z]);
      
     
 }
