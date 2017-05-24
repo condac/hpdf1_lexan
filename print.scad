@@ -68,6 +68,10 @@ module side_stab_x2() {
     side_stab_p();
     translate([8,-8,0])side_stab_p();
 }
+module side_stab2_x2() {
+    rotate([0,90,0]) side_stab2_p();
+     translate([8,-8,0])rotate([0,90,0])side_stab2_p();
+}
 //steering_hubs();
 module steering_hubs() {
     steeringhubs_p();

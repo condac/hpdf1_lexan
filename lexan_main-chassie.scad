@@ -74,8 +74,8 @@ lb_y = b_y-lb_wall-bakre_wall-fm_y-batteri_y;
 lb_z = batteri_z;
 
 // sidofästen
-sf_y = 62;
-
+sf_y = 62;//62;
+sf_x = 106;
 
 
 translate([0,10,1]) rotate([0,0,90]) translate([0,-batteri_y/2,1]) %batteri();
@@ -132,8 +132,8 @@ module main_chassie_p() {
             //translate([0,b_y,0]) mirror([1,0,0]) front_mount();
             
             // sidofästen
-            translate([b_x/2, sf_y, 0]) mirror([0,0,0]) sido_fasten();
-            translate([-b_x/2, sf_y, 0]) mirror([1,0,0]) sido_fasten();
+            translate([sf_x/2 -23.5 , sf_y, 0]) mirror([0,0,0]) sido_fasten();
+            translate([-sf_x/2+23.5, sf_y, 0]) mirror([1,0,0]) sido_fasten();
             
             // refflor under batteriet
             for (a =[0:4:batteri_y]) {
