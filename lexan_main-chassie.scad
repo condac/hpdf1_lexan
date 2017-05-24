@@ -1,12 +1,15 @@
 use <lexan_nose.scad>;
 use <lexan_side_stab.scad>
+use <hpdf1_rear_cradle_universal.scad>
+include <tunable_constants.scad>;
+
 
 // main-chassie
-%translate([0,240-n_y,0]) nose_p();
+%translate([0,0,0]) nose_p();
 //%translate([28, -65, 0])  rotate([0,0,180]) import("ref/main-chassis.stl", convexity=10);
-%translate([-115, -67, -93])  rotate([0,-90,-90]) import("ref/Cradle.stl", convexity=10);
+//%translate([-115, -67, -93])  rotate([0,-90,-90]) import("ref/Cradle.stl", convexity=10);
 %translate([28, -64, 0])  rotate([0,0,180]) import("ref/rear-damper-mount.stl", convexity=10);
-
+%rearCradle();
 //translate([28+28+28+15, -20, -91])  rotate([-90,0,0]) rotate([0,0,180]) %import("body.stl", convexity=10);
 
 translate([0,0,4]) %side_stab_p();
@@ -58,8 +61,8 @@ s_plate_h_y = 6.1; // hur långt bak hålet ska va
 
 // skruvar
 $fs= 0.4;
-m3_d = 3; // hål som en skruv inte ska fästa i
-m3_d_s = 2.8; // hål som skruven ska skapa gängor i
+m3_d = C_M3_DIAMETER; // hål som en skruv inte ska fästa i
+m3_d_s = C_M3_DIAMETER_THREAD; // hål som skruven ska skapa gängor i
 
 // front mount
 fm_y = 8;
@@ -75,7 +78,7 @@ lb_z = batteri_z;
 
 // sidofästen
 sf_y = 62;//62;
-sf_x = 106;
+sf_x = 100;
 
 
 translate([0,10,1]) rotate([0,0,90]) translate([0,-batteri_y/2,1]) %batteri();

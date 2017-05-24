@@ -13,7 +13,7 @@ color("lightblue")main_chassie_p();
 battery_plate_p();
 
 
-translate([0,0,5]) side_stab2_p();
+translate([0,0,5]) side_stab_p();
 
 module side_stab_p() {
     
@@ -21,7 +21,7 @@ module side_stab_p() {
     $fs=0.1;
     
     s_x1 = 36;
-    s_x2 = 53;
+    s_x2 = 50;
     s_z = 7;
     
     

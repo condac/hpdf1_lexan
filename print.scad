@@ -6,6 +6,9 @@ use <lexan_side_stab.scad>
 use <lexan_steering_hub.scad>
 use <bodyposts.scad>
 use <wingadapter.scad>
+use <hpdf1_rear_cradle_universal.scad>
+use <frontwing.scad>
+
 param1=0;   // must be initalised
 len=param1; // param1 passed via -D on cmd-line
 echo(len,param1);
@@ -13,26 +16,26 @@ echo(len,param1);
 
 
 
-module side_spring_plate() { // `make` me"
+module side_spring_plate() { 
     side_spring_plate_p();
 }
 
 
-module nose_plate() { // `make` me"
+module nose_plate() { 
     nose_plate_p();
 }
 
-module main_chassie() { // `make` me"
+module main_chassie() { 
     main_chassie_p();
 }
 
 
-module battery_plate() { // `make` me"
+module battery_plate() { 
     battery_plate_p();
 }
 
 
-module receiver_plate() { // `make` me"
+module receiver_plate() {
     receiver_plate_p();
 }
 
@@ -94,3 +97,40 @@ module arm_pin() {
     arm_pin_p();
     translate([0,8,0]) arm_pin_p();
 }
+
+
+// rear cradle
+
+module cradle_bottomPlate() {
+    bottomPlate();
+    
+}
+module cradle_bottomPlate_wide() {
+    bottomPlate(wide=50);
+    
+}
+//cradle_leftBulkhead();
+module cradle_leftBulkhead() {
+    rotate([0,90,0]) leftBulkhead();
+    
+}
+//cradle_rightBulkhead();
+module cradle_rightBulkhead() {
+    rotate([0,-90,0])rightBulkhead();
+    
+}
+
+module cradle_wingPlate() {
+    rotate([90,0,0])wingPlate();
+    
+}
+//frontwing();
+module frontwing() {
+    rotate([180,0,0])frontwing_p();
+    
+}
+module frontwingflex() {
+    rotate([180,0,0])frontwingflex_p();
+    
+}
+
