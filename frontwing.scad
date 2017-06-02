@@ -1,7 +1,10 @@
 // Wing adapter with body post
+include <tunable_constants.scad>;
+
 
 $fs = 0.1;
-yd = 10;
+yd = 17;
+c_yd = 25; //  cube extra diameter
 m4_d = 4.2;
 m3_d = 3.1;
 s_dist = 14.5;
@@ -35,6 +38,7 @@ module frontwing_p() {
                         translate([0,0,0]) cylinder(d = yd, h=hh);
                         translate([0,s_dist,0]) cylinder(d = yd+5, h=hh);
                         translate([0,post_dist,0]) cylinder(d = yd, h=hh);
+                        translate([-c_yd/2,0,hh-3]) cube([c_yd,20,3]);
                     }
                     hull() {
                         translate([0,s_dist,0]) cylinder(d = yd+5, h=hh);
@@ -63,8 +67,8 @@ module frontwing_p() {
         //muttrar
         translate([0,mount_dist,0])  cylinder(d=6.5, h=2.5, $fn=6);
         
-        translate([0,0,0]) rotate([0,0,360/12]) cylinder(d=8, h=4, $fn=6);
-        translate([0,s_dist,0]) rotate([0,0,360/12]) cylinder(d=8, h=4, $fn=6);
+        translate([0,0,0]) rotate([0,0,360/12]) cylinder(d=C_M4_NUT, h=4, $fn=6);
+        translate([0,s_dist,0]) rotate([0,0,360/12]) cylinder(d=C_M4_NUT, h=4, $fn=6);
         
         // curv
         translate([xx/2+curv, 55-curv,hh-tjock ]) cylinder(r=curv, h=tjock);

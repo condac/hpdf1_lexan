@@ -42,7 +42,7 @@ ra_bt_d = ra_b_d-2; // Bearing diameter for rear axle slot so it dont fall throu
 
 // Motor mount
 mm_x = 22;
-mm_w = 5;
+mm_w = 6;
 mm_max = -20; // screw mount place at maximum distance from axle
 mm_min = -30; // screw mount place at minimum distance from axle
 mm_screw_dist = 25;
@@ -51,7 +51,7 @@ mm_motor_d = 36;
 mm_motor_z = mm_motor_d/2 +0.7;
 
 // Left bulkhead
-lb_x = -42;
+lb_x = -43;
 
 
 // Sidemounts
@@ -72,8 +72,8 @@ rdm_y  = -9;
 
 
 // rear wingplate screws
-rwp_xr = 24.5;
-rwp_xl = -40.5;
+rwp_xr = 25;
+rwp_xl = -40;
 rwp_y  = -67;
 rwp_z1 = 15;
 rwp_z2 = rwp_z1+18;
@@ -97,15 +97,15 @@ module bottomPlate(wide= 36) {
         union() {
             hull() {
                 translate([bfr_x, bfr_y, 0]) cylinder(d=8, h=bp_h);
-                translate([bfr_x+6, bfr_y, 0]) cylinder(d=6, h=bp_h);
+                translate([bfr_x+7, bfr_y, 0]) cylinder(d=6, h=bp_h);
             }
             hull() {
                 translate([bfr_x, brr_y, 0]) cylinder(d=8, h=bp_h);
-                translate([bfr_x+6, brr_y, 0]) cylinder(d=6, h=bp_h);
+                translate([bfr_x+7, brr_y+1, 0]) cylinder(d=7, h=bp_h);
             }
             hull() {
-                translate([bfr_x+6, bfr_y, 0]) cylinder(d=6, h=bp_h);
-                translate([bfr_x+6, brr_y, 0]) cylinder(d=6, h=bp_h);
+                translate([bfr_x+7, bfr_y, 0]) cylinder(d=6, h=bp_h);
+                translate([bfr_x+7, brr_y, 0]) cylinder(d=6, h=bp_h);
             }
             
             hull() {
@@ -202,8 +202,10 @@ module leftBulkhead() {
             }
             
             // rear wing mount
-            translate([rwp_xl, rwp_y+3, rwp_z1]) rotate([-90,0,0]) cylinder(d=6, h=8);
-            translate([rwp_xl, rwp_y+3, rwp_z2]) rotate([-90,0,0]) cylinder(d=6, h=8);
+            hull() {
+                translate([rwp_xl, rwp_y+3, rwp_z1]) rotate([-90,0,0]) cylinder(d=6, h=8);
+                translate([rwp_xl, rwp_y+3, rwp_z2]) rotate([-90,0,0]) cylinder(d=6, h=8);
+            }
             
         }
         // All screws
@@ -221,7 +223,7 @@ module leftBulkhead() {
         }
         
         // flaten print side
-        translate([lb_x+5, -100, 0])  cube([20, 200,100]);
+        translate([lb_x+mm_w, -100, 0])  cube([20, 200,100]);
     }
     
 }
@@ -270,9 +272,10 @@ module rightBulkhead() {
             }
             
             // rear wing mount
-            translate([rwp_xr, rwp_y+3, rwp_z1]) rotate([-90,0,0]) cylinder(d=6, h=8);
-            translate([rwp_xr, rwp_y+3, rwp_z2]) rotate([-90,0,0]) cylinder(d=6, h=8);
-            
+            hull() {
+                translate([rwp_xr, rwp_y+3, rwp_z1]) rotate([-90,0,0]) cylinder(d=6, h=8);
+                translate([rwp_xr, rwp_y+3, rwp_z2]) rotate([-90,0,0]) cylinder(d=6, h=8);
+            }
         }
         // All screws
         allScrews();
@@ -392,7 +395,7 @@ module allScrews() {
                               %visualHelp();
 module visualHelp() {
 
-%translate([28, -64, 0])  rotate([0,0,180]) import("ref/rear-damper-mount.stl", convexity=10);
+%translate([92.5, 80, 35.5])  rotate([0,0,180]) import("ref/RearDamperMountCarbon.stl", convexity=10);
 
 color("green") side_spring_plate_p();
 

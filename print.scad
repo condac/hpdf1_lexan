@@ -8,12 +8,14 @@ use <bodyposts.scad>
 use <wingadapter.scad>
 use <hpdf1_rear_cradle_universal.scad>
 use <frontwing.scad>
+use <rear_axle.scad>
 
 param1=0;   // must be initalised
 len=param1; // param1 passed via -D on cmd-line
 echo(len,param1);
 
-
+$fs = 0.5;
+$fa = 5.1;
 
 
 module side_spring_plate() { 
@@ -133,4 +135,13 @@ module frontwingflex() {
     rotate([180,0,0])frontwingflex_p();
     
 }
-
+//indrive();
+module indrive() {
+    
+    indrive_p();
+}
+//outdrive();
+module outdrive() {
+    
+    rotate([180,0,0]) outdrive_p();
+}
