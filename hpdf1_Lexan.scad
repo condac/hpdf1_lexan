@@ -7,6 +7,7 @@ use <caster_hub.scad>
 use <wingadapter.scad>
 use <frontwing.scad>
 use <rear_axle.scad>
+use <hpdf1_rear_cradle_universal.scad>
 
 
 
@@ -47,8 +48,8 @@ translate([0,240,0]) union() {
 
 //translate([70/2,240-2-180,0]) cylinder (d=5, h=50);
 //translate([-70/2,240-2-180,0]) cylinder (d=5, h=50);
-
-translate([-115, -67, -93])  rotate([0,-90,-90]) import("ref/Cradle.stl", convexity=10);
+rearCradle();
+//translate([-115, -67, -93])  rotate([0,-90,-90]) import("ref/Cradle.stl", convexity=10);
 
 //190mm limit
 translate([190/2, -80,0]) cube([5,10,50]) ;

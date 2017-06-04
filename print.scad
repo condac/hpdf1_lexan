@@ -135,7 +135,7 @@ module frontwingflex() {
     rotate([180,0,0])frontwingflex_p();
     
 }
-//indrive();
+//translate([20,1,0]) indrive();
 module indrive() {
     
     indrive_p();
@@ -145,3 +145,9 @@ module outdrive() {
     
     rotate([180,0,0]) outdrive_p();
 }
+//left_wheelmount();
+module left_wheelmount() {
+    
+    rotate([180,0,0]) left_wheelmount_p();
+}
+

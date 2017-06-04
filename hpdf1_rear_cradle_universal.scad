@@ -9,7 +9,7 @@ use <wingadapter.scad>
 use <common_parts.scad>
 
 
-$fs=0.1;
+//$fs=0.1; change resolution in print.scad
 
 
 br_x = 25;

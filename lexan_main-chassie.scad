@@ -60,7 +60,7 @@ s_plate_y = 11; // hur långt bak plattan sticker ut
 s_plate_h_y = 6.1; // hur långt bak hålet ska va
 
 // skruvar
-$fs= 0.4;
+//$fs= 0.4; sätts i print.scad
 m3_d = C_M3_DIAMETER; // hål som en skruv inte ska fästa i
 m3_d_s = C_M3_DIAMETER_THREAD; // hål som skruven ska skapa gängor i
 
@@ -590,5 +590,5 @@ module vanster_faste() {
 
 module bak_screw_cut() {
     translate([0,10-0.01,5]) rotate([90,0,0]) flat_screw_tap(l = 10);
-    translate([0,bakre_wall+0.01,5]) rotate([90,0,0]) cylinder(d=7, h=3, $fn=6);
+    translate([0,bakre_wall+0.01,5]) rotate([90,0,0]) cylinder(d=C_M3_NUT, h=3, $fn=6);
 }

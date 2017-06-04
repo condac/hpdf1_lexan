@@ -1,5 +1,8 @@
 // file for viewing parts when edit
 
+// M4 stång längd 170mm
+
+
 use <lexan_main-chassie.scad>
 use <lexan_nose.scad>
 use <lexan_side_stab.scad>
@@ -9,12 +12,18 @@ use <hpdf1_rear_cradle_universal.scad>
 include <tunable_constants.scad>;
 
 
+target_width = 188;
 
-axle_rod_length = 135; // Length of the carbonfiberrod or other axle material. 
-axle_d = 8.15;
+threaded_rod = target_width-21;
+axle_rod_length = target_width-26-26-4.5-10-2-1; // Length of the carbonfiberrod or other axle material. 
+echo("Carbon axle lenght to cut:",axle_rod_length);
+echo("M4 threaded rod lenght to cut:",threaded_rod);
+axle_d = C_8MM_TIGHT;
+
+axle_bearing_h = 4;
 
 // Diffplate
-plate_d1 = 28.5; // outer diameter
+plate_d1 = 28.3; // outer diameter
 plate_d2 = 15; // inner diameter
 plate_h = 1.5; // thickness
 
@@ -22,14 +31,14 @@ plate_wall = 1.2*2; // thickness of the wall that hold the washer plate in place
 
 //rubber sealing
 seal_d1 = 25;
-seal_d2 = 16.5;
+seal_d2 = 16;
 seal_h = 2;
 
 // wheel hex mount
 wheel_hex = 16.2;
 
 //drive clearence
-drive_clear = 0.5; // the distance between the gear and the outer rim that hold the plate in place
+drive_clear = 1; // the distance between the gear and the outer rim that hold the plate in place
 
 
 %rearCradle();
@@ -39,8 +48,8 @@ ra_z = 24;
 ra_y = -53;
 
 // cradle offsets
-mm_x = 22; // UPDATE FROM CRADLE DRAVING IF IT HAS CHANGED
-cradle_wall = 6; // UPDATE FROM CRADLE DRAVING IF IT HAS CHANGED
+mm_x = 22; // Cradle inner offset from car center UPDATE FROM CRADLE DRAwING IF IT HAS CHANGED
+cradle_wall = 6; // Cradle thickness on motormount UPDATE FROM CRADLE DRAwING IF IT HAS CHANGED
 
 gear_center = mm_x+13; // mm_x + 13
 
@@ -50,22 +59,35 @@ rear_axle_assembly();
 
 module rear_axle_assembly() {
     translate([0,ra_y,ra_z]) rotate([0,90,0]) union() {
-        translate([0,0,-axle_rod_length/2])carbon_axle();
+        %translate([0,0,target_width/2-26-4.5])rotate([0,180,0]) carbon_axle();
         translate([0,0,gear_center-0.5]) cylinder(d=40, h=1); // visual gear    
         translate([0,0,gear_center]) color("cyan") balls();
         translate([0,0,gear_center]) color("green") diff_plates();
         translate([0,0,gear_center]) color("black") sealings();
         translate([0,0,gear_center]) indrive_p();
         translate([0,0,gear_center]) outdrive_p();
-        translate([0,0,axle_rod_length/2]) wheel();
-        rotate([0,180,0]) translate([0,0,axle_rod_length/2]) wheel();
+        translate([0,0,target_width/2-26]) wheel();
+        rotate([0,180,0]) translate([0,0,target_width/2-26]) wheel();
+        rotate([0,180,0]) translate([0,0,target_width/2-26]) left_wheelmount_visual();
+        
+        // mounting screws etc
+        //right
+        translate([0,0,target_width/2-26+1 ])rotate([0,0,0]) cylinder(d=12, h=1); //washer
+        translate([0,0,target_width/2-26+1+1 ])rotate([0,0,0]) cylinder(d=9, h=axle_bearing_h); //bearing
+        translate([0,0,target_width/2-26+1+1+axle_bearing_h ])rotate([0,0,0]) cylinder(d=7, h=5, $fn=6); // locknut
+        translate([0,0,target_width/2-26+1+1+axle_bearing_h+5 ])rotate([0,0,20]) cylinder(d=7, h=5, $fn=6); // locknut
+        //left
+        rotate([0,180,0]) translate([0,0,target_width/2-26+1 ])rotate([0,0,0]) cylinder(d=12, h=1); //washer
+        rotate([0,180,0]) translate([0,0,target_width/2-26+1+1 ])rotate([0,0,0]) cylinder(d=7, h=5, $fn=6); // locknut
+        rotate([0,180,0])translate([0,0,target_width/2-26+1+1++5 ])rotate([0,0,20]) cylinder(d=7, h=5, $fn=6); // locknut
+        
     }
 }
 
 module carbon_axle() {
     
     cylinder(d=8, h=axle_rod_length);
-    translate([0,0,-20]) cylinder(d=4, h=axle_rod_length+40);
+    translate([0,0,-22]) cylinder(d=4, h=threaded_rod);
 }
 
 module balls() {
@@ -113,7 +135,7 @@ module seal_cut() {
         translate([0,0,-0.5]) cylinder(d= seal_d2, h=20+1);
     }
 }
-//indrive_p();
+indrive_p();
 module indrive_p() {
     _startpoint = -gear_center+mm_x+cradle_wall+0.5;
     hh = abs(_startpoint)-1.5;
@@ -128,7 +150,7 @@ module indrive_p() {
         translate([0,0,-1.5-plate_h-seal_h]) seal_cut();
         
         //diffplate cut
-        translate([0,0,-1.5-plate_h-seal_h/3]) diff_plate_cut();
+        translate([0,0,-1.5-plate_h-seal_h/4]) diff_plate_cut();
         
         // axle cut
         translate([0,0,_startpoint]) cylinder(d=axle_d, h=hh);
@@ -137,7 +159,7 @@ module indrive_p() {
         translate([0,0,_startpoint+hh-drive_clear]) cylinder(d=50, h=drive_clear);
     }
     // seal inner fix
-    translate([0,0,-1.5-plate_h-seal_h]) seal_fix();
+    translate([0,0,-1.5-plate_h-seal_h-0.3]) seal_fix();
     
     
     
@@ -147,7 +169,7 @@ outdrive_p();
 module outdrive_p() {
     _startpoint = -gear_center+mm_x+cradle_wall+0.5;
 
-    hh = axle_rod_length/2 - gear_center-1.5 ;
+    hh = target_width/2 -26 - gear_center-1.5 ;
     
     difference() {
         union() {
@@ -160,15 +182,15 @@ module outdrive_p() {
         translate([0,0,+1.5+plate_h+seal_h]) rotate([180,0,0]) seal_cut();
         
         //diffplate cut
-        translate([0,0,+1.5+plate_h+seal_h/3]) rotate([180,0,0]) diff_plate_cut();
+        translate([0,0,+1.5+plate_h+seal_h/4]) rotate([180,0,0]) diff_plate_cut();
         
         // axle cut
-        translate([0,0,_startpoint]) cylinder(d=axle_d+0.5, h=100);
+        translate([0,0,_startpoint]) cylinder(d=C_8MM_LOOSE, h=100);
         
         // inner bearing
-        translate([0,0,1]) cylinder(d=C_12MM_BEARING_D, h=C_12MM_BEARING_H+drive_clear);
+        translate([0,0,1.5]) cylinder(d=C_12MM_BEARING_D, h=C_12MM_BEARING_H+drive_clear);
         // outer bearing
-        translate([0,0,1.5+hh - C_12MM_BEARING_H]) cylinder(d=C_12MM_BEARING_D, h=C_12MM_BEARING_H);
+        translate([0,0,1.5+hh-0.5 - C_12MM_BEARING_H*2]) %cylinder(d=C_12MM_BEARING_D, h=C_12MM_BEARING_H*2+1+3);
         
         // drive clear
         translate([0,0,1.5]) cylinder(d=50, h=drive_clear);
@@ -202,5 +224,38 @@ module wheel() {
     
 }
 
+module left_wheelmount_p() {
+    hh = 22;
+    wall = 2; //wall between nut and wheelrim
+    nut_h = 9.5/2;
+    wheel_hex_h = 14;
+    
+    shim = 2;
+    
+    difference() {
+        union() {
+            translate([0,0,-wheel_hex_h]) rotate([0,0,0])cylinder(d=wheel_hex, h=wheel_hex_h-1, $fn=6);
+            translate([0,0,-1]) rotate([0,0,0])cylinder(d1=wheel_hex, d2=wheel_hex-2, h=1, $fn=6);
+            translate([0,0,-hh]) rotate([0,0,0])cylinder(d=wheel_hex, h=hh-wheel_hex_h );
+            translate([0,0,-hh-shim]) rotate([0,0,0])cylinder(d2=wheel_hex, d1=10, h=shim );
+        }
+        translate([0,0,-nut_h-wall-1])cylinder(d=C_M4_NUT, h=nut_h+1, $fn=6);
+        translate([0,0,-hh-wall-nut_h]) cylinder(d=C_8MM_FIT, h=hh);
+        
+        // M4 cut
+        translate([0,0,-hh]) cylinder(d=C_M4_DIAMETER, h=hh+2);
+    }
+}
+
+module left_wheelmount_visual() {
+    
+    color("red") difference() {
+        translate([0,0,0]) left_wheelmount_p();
+        translate([-100,0.1,-100]) cube(200);
+        
+    }
+    
+    
+}
 
 %translate([-115, -67, -93])  rotate([0,-90,-90]) import("ref/Cradle.stl", convexity=10);
