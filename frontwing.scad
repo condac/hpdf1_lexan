@@ -2,7 +2,7 @@
 include <tunable_constants.scad>;
 
 
-$fs = 0.1;
+//$fs = 0.1;
 yd = 17;
 c_yd = 25; //  cube extra diameter
 m4_d = 4.2;
@@ -10,7 +10,7 @@ m3_d = 3.1;
 s_dist = 14.5;
 post_dist = 24;
 lip_dist = 28;
-hh = 8;
+hh = 9;
 mount_dist = 54;
 
 xx = 24;
@@ -27,7 +27,7 @@ tjock = 3;
 curv = 10;
 
 frontwingflex_p();
-
+skid_guard_p();
 
 module frontwing_p() {
     difference() {
@@ -83,5 +83,55 @@ module frontwingflex_p() {
             translate([0,55,0]) cylinder(d=13, h=10);
             translate([0,35,0]) cylinder(d=13, h=10);
         }
+    }
+}
+
+module skid_guard_p() {
+    thin_mount = 1;
+    lip = 4;
+    angle = 25;
+    lip_dist = 28;
+    lip_gap = 3;
+    difference() {
+        union() {
+            difference() {
+                union() {
+                    hull() {
+                        translate([0,0,0]) cylinder(d = yd, h=thin_mount+lip);
+                        translate([0,s_dist,0]) cylinder(d = yd+5, h=thin_mount+lip);
+                        translate([0,post_dist,0]) cylinder(d = yd, h=thin_mount+lip);
+                        
+                    }
+                    hull() {
+                        translate([0,s_dist,0]) cylinder(d = yd+5, h=thin_mount+lip);
+                        translate([-xx/2,lip_dist,0]) cube([xx, 1, thin_mount+lip]);
+                        translate([-xx/2,55+20-1,0]) cube([xx, 1, thin_mount+lip]);
+                    }
+                   
+                    
+                }
+                
+            }
+
+        }
+        
+        translate([-25,lip_dist+lip_gap,0]) rotate([angle,0,0]) translate([0,0,-50]) cube([50,100,50]);
+        translate([-25,-100+lip_dist,-50+lip]) cube([50,100,50]);
+        
+        // screw holes
+        translate([0,0,0])      cylinder(d = m4_d, h=hh);
+        translate([0,s_dist,0]) cylinder(d = m4_d, h=hh);
+        translate([0,post_dist,0]) cylinder(d = m3_d, h=hh);
+        translate([0,mount_dist,0])  cylinder(d = m3_d, h=hh+m_z1+m_z2);
+        
+        translate([0,post_dist,4]) cylinder(d = 6.5, h=hh);
+        
+        //muttrar
+        translate([0,mount_dist,0])  cylinder(d=6.5, h=2.5, $fn=6);
+        
+        translate([0,0,0]) rotate([0,0,360/12]) cylinder(d=C_M4_NUT, h=4, $fn=6);
+        translate([0,s_dist,0]) rotate([0,0,360/12]) cylinder(d=C_M4_NUT, h=4, $fn=6);
+        
+
     }
 }

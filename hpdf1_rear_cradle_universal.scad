@@ -37,7 +37,7 @@ bp_h = 3;
 // rear axle
 ra_z = 24;
 ra_y = -53;
-ra_b_d = 15.5; // Bearing diameter for rear axle
+ra_b_d = 15.4; // Bearing diameter for rear axle
 ra_bt_d = ra_b_d-2; // Bearing diameter for rear axle slot so it dont fall through
 
 // Motor mount
@@ -49,7 +49,7 @@ mm_screw_dist = 25;
 mm_screw_d = 3.3;
 mm_motor_d = 36;
 mm_motor_z = mm_motor_d/2 +0.7;
-
+mm_motor_length = 54;
 // Left bulkhead
 lb_x = -43;
 
@@ -385,15 +385,16 @@ module allScrews() {
     translate([rdm_xl, rdm_y, rdm_z]) rotate([180,0,0]) common_flat_screw_tap(l = 13);
     
     // rear wing mount
-    translate([rwp_xr, rwp_y, rwp_z1]) rotate([-90,0,0]) common_button_screw_tap(l = 10, l2=3);
-    translate([rwp_xr, rwp_y, rwp_z2]) rotate([-90,0,0]) common_button_screw_tap(l = 10, l2=3);
-    translate([rwp_xl, rwp_y, rwp_z1]) rotate([-90,0,0]) common_button_screw_tap(l = 10, l2=3);
-    translate([rwp_xl, rwp_y, rwp_z2]) rotate([-90,0,0]) common_button_screw_tap(l = 10, l2=3);
+    translate([rwp_xr, rwp_y, rwp_z1]) rotate([-90,0,0]) common_button_screw_tap(l = 12, l2=3);
+    translate([rwp_xr, rwp_y, rwp_z2]) rotate([-90,0,0]) common_button_screw_tap(l = 12, l2=3);
+    translate([rwp_xl, rwp_y, rwp_z1]) rotate([-90,0,0]) common_button_screw_tap(l = 12, l2=3);
+    translate([rwp_xl, rwp_y, rwp_z2]) rotate([-90,0,0]) common_button_screw_tap(l = 12, l2=3);
 }
 
 
                               %visualHelp();
 module visualHelp() {
+    translate([mm_x,mm_max,mm_motor_z]) rotate([0,-90,0]) cylinder(d=mm_motor_d, h=mm_motor_length);
 
 %translate([92.5, 80, 35.5])  rotate([0,0,180]) import("ref/RearDamperMountCarbon.stl", convexity=10);
 
@@ -433,7 +434,7 @@ translate([0,240,0]) union() {
 //translate([70/2,240-2-180,0]) cylinder (d=5, h=50);
 //translate([-70/2,240-2-180,0]) cylinder (d=5, h=50);
 
-//%translate([-115, -67, -93])  rotate([0,-90,-90]) import("ref/Cradle.stl", convexity=10);
+//%translate([-115, -67, -93.2])  rotate([0,-90,-90]) import("ref/Cradle.stl", convexity=10);
 
 //translate([0,-33,3]) rotate([0,0,180])import("ref/kristian/Rearpod/bottomPlate.stl", convexity=10);
 %translate([0, -33+1.5, 3+2.5]) rotate([0,0,180])import("ref/kristian/Rearpod/wingPlate.stl", convexity=10);

@@ -15,7 +15,7 @@ include <tunable_constants.scad>;
 target_width = 188;
 
 threaded_rod = target_width-21;
-axle_rod_length = target_width-26-26-4.5-10-2-1; // Length of the carbonfiberrod or other axle material. 
+axle_rod_length = target_width-26-26-4.5-9-2-1; // Length of the carbonfiberrod or other axle material. 
 echo("Carbon axle lenght to cut:",axle_rod_length);
 echo("M4 threaded rod lenght to cut:",threaded_rod);
 axle_d = C_8MM_TIGHT;
@@ -28,7 +28,7 @@ plate_d2 = 15; // inner diameter
 plate_h = 1.5; // thickness
 
 plate_wall = 1.2*2; // thickness of the wall that hold the washer plate in place, make it a multiple of your nozzle size for best result
-
+ball_d = 3.175;
 //rubber sealing
 seal_d1 = 25;
 seal_d2 = 16;
@@ -38,8 +38,8 @@ seal_h = 2;
 wheel_hex = 16.2;
 
 //drive clearence
-drive_clear = 1; // the distance between the gear and the outer rim that hold the plate in place
-
+drive_clear = 0.2; // the distance between the gear and the outer rim that hold the plate in place
+cone_end= 1;
 
 %rearCradle();
 
@@ -49,9 +49,9 @@ ra_y = -53;
 
 // cradle offsets
 mm_x = 22; // Cradle inner offset from car center UPDATE FROM CRADLE DRAwING IF IT HAS CHANGED
-cradle_wall = 6; // Cradle thickness on motormount UPDATE FROM CRADLE DRAwING IF IT HAS CHANGED
+cradle_wall = 7; // Cradle thickness on motormount + space for washer UPDATE FROM CRADLE DRAwING IF IT HAS CHANGED
 
-gear_center = mm_x+13; // mm_x + 13
+gear_center = mm_x+14; // mm_x + 13
 
 //rear_axle_assembly();
 translate([190/2, -80,0]) cube([5,10,50]) ;
@@ -93,13 +93,13 @@ module carbon_axle() {
 module balls() {
     
     for (a =[0:260/8:360]) {
-        rotate([0,0,a]) translate([23/2,0,0]) sphere(d=3.1);
+        rotate([0,0,a]) translate([23/2,0,0]) sphere(d=ball_d);
     }
     
 }
 module diff_plates() {
-    translate([0,0,-1.5-plate_h]) diff_plate();
-    translate([0,0,+1.5]) diff_plate();
+    translate([0,0,-ball_d/2-plate_h]) diff_plate();
+    translate([0,0,+ball_d/2]) diff_plate();
 }
 module diff_plate() {
     
@@ -117,8 +117,8 @@ module diff_plate_cut() {
 }
 
 module sealings() {
-    translate([0,0,-1.5-plate_h-seal_h]) seal();
-    translate([0,0,+1.5+plate_h]) seal();
+    translate([0,0,-ball_d/2-plate_h-seal_h]) seal();
+    translate([0,0,+ball_d/2+plate_h]) seal();
 }
 module seal() {
     
@@ -137,29 +137,30 @@ module seal_cut() {
 }
 indrive_p();
 module indrive_p() {
-    _startpoint = -gear_center+mm_x+cradle_wall+0.5;
-    hh = abs(_startpoint)-1.5;
+    _startpoint = -gear_center+mm_x+cradle_wall+0;
+    hh = abs(_startpoint)-drive_clear-ball_d/2;
     
     difference() {
         union() {
-            translate([0,0,_startpoint+2]) cylinder(d=plate_d1+plate_wall, h= hh-2);
             translate([0,0,_startpoint]) cylinder(d1=plate_d1+plate_wall-2,  d2=plate_d1+plate_wall, h= 2);
+            translate([0,0,_startpoint+2]) cylinder(d=plate_d1+plate_wall, h= hh-2-cone_end);
+            translate([0,0,_startpoint+2+hh-2-cone_end]) cylinder(d1=plate_d1+plate_wall, d2= plate_d1+0.8, h= cone_end);
         }
         
         //seal cut
-        translate([0,0,-1.5-plate_h-seal_h]) seal_cut();
+        translate([0,0,-ball_d/2-plate_h-seal_h]) seal_cut();
         
         //diffplate cut
-        translate([0,0,-1.5-plate_h-seal_h/4]) diff_plate_cut();
+        translate([0,0,-ball_d/2-plate_h-seal_h/4]) diff_plate_cut();
         
         // axle cut
         translate([0,0,_startpoint]) cylinder(d=axle_d, h=hh);
         
         // drive clear
-        translate([0,0,_startpoint+hh-drive_clear]) cylinder(d=50, h=drive_clear);
+        //translate([0,0,_startpoint+hh-drive_clear]) cylinder(d=50, h=drive_clear);
     }
     // seal inner fix
-    translate([0,0,-1.5-plate_h-seal_h-0.3]) seal_fix();
+    translate([0,0,-ball_d/2-plate_h-seal_h-0.3]) seal_fix();
     
     
     
@@ -169,35 +170,36 @@ outdrive_p();
 module outdrive_p() {
     _startpoint = -gear_center+mm_x+cradle_wall+0.5;
 
-    hh = target_width/2 -26 - gear_center-1.5 ;
+    hh = target_width/2 -26 - gear_center-1.5 -drive_clear;
     
     difference() {
         union() {
-            translate([0,0,1.5]) cylinder(d=plate_d1+plate_wall, h= plate_h+seal_h+2);
-            translate([0,0,1.5+plate_h+seal_h+2]) cylinder(d1=plate_d1+plate_wall, d2= wheel_hex-2 , h= 12);
-            translate([0,0,1.5+plate_h+seal_h+2+5]) cylinder(d=wheel_hex, h=hh - (plate_h+seal_h+2+5) , $fn=6);
+            translate([0,0,ball_d/2+drive_clear]) cylinder(d2=plate_d1+plate_wall, d1= plate_d1+0.8, h= cone_end);
+            translate([0,0,ball_d/2+drive_clear+cone_end]) cylinder(d=plate_d1+plate_wall, h= plate_h+seal_h+2-cone_end);
+            translate([0,0,ball_d/2+drive_clear+plate_h+seal_h+2]) cylinder(d1=plate_d1+plate_wall, d2= wheel_hex-2 , h= 12);
+            translate([0,0,ball_d/2+drive_clear+plate_h+seal_h+2+5]) cylinder(d=wheel_hex, h=hh - (plate_h+seal_h+2+5) , $fn=6);
         }
         
         //seal cut
-        translate([0,0,+1.5+plate_h+seal_h]) rotate([180,0,0]) seal_cut();
+        translate([0,0,+ball_d/2+plate_h+seal_h]) rotate([180,0,0]) seal_cut();
         
         //diffplate cut
-        translate([0,0,+1.5+plate_h+seal_h/4]) rotate([180,0,0]) diff_plate_cut();
+        translate([0,0,+ball_d/2+plate_h+seal_h/4]) rotate([180,0,0]) diff_plate_cut();
         
         // axle cut
         translate([0,0,_startpoint]) cylinder(d=C_8MM_LOOSE, h=100);
         
         // inner bearing
-        translate([0,0,1.5]) cylinder(d=C_12MM_BEARING_D, h=C_12MM_BEARING_H+drive_clear);
+        translate([0,0,ball_d/2]) cylinder(d=C_12MM_BEARING_D, h=C_12MM_BEARING_H+drive_clear);
         // outer bearing
-        translate([0,0,1.5+hh-0.5 - C_12MM_BEARING_H*2]) %cylinder(d=C_12MM_BEARING_D, h=C_12MM_BEARING_H*2+1+3);
+        translate([0,0,ball_d/2+hh-0.5 - C_12MM_BEARING_H*2]) cylinder(d=C_12MM_BEARING_D, h=C_12MM_BEARING_H*2+1+3);
         
         // drive clear
-        translate([0,0,1.5]) cylinder(d=50, h=drive_clear);
+        //translate([0,0,ball_d/2]) cylinder(d=50, h=drive_clear);
         
     }
     // seal inner fix
-    translate([0,0,+1.5+plate_h+seal_h]) seal_fix();
+    translate([0,0,+ball_d/2+plate_h+seal_h]) seal_fix();
     
 }
 
@@ -258,4 +260,4 @@ module left_wheelmount_visual() {
     
 }
 
-%translate([-115, -67, -93])  rotate([0,-90,-90]) import("ref/Cradle.stl", convexity=10);
+//%translate([-115, -67, -93])  rotate([0,-90,-90]) import("ref/Cradle.stl", convexity=10);

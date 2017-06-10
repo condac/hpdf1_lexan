@@ -39,8 +39,9 @@ translate([0,240,0]) union() {
     color("yellow") arm_plate();
     color("green") translate([0,-115,30]) upper_arm_plate_p();
     
-    %translate([0, -25.5, 10+4]) rotate([0,180,0]) wingadapter_p();
-    translate([0, -25.5, 10+4]) rotate([0,180,0]) frontwing_p();
+    //%translate([0, -25.5, 10+4]) rotate([0,180,0]) wingadapter_p();
+    translate([0, -25.5, 4+1+9.2]) rotate([0,180,0]) frontwing_p();
+    translate([0, -25.5, 0]) rotate([0,0,0]) skid_guard_p();
 }
 
 

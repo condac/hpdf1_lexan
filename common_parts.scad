@@ -2,7 +2,7 @@ include <tunable_constants.scad>;
 common_flat_screw_tap();
 module common_flat_screw_tap(l = 10, l2 = 0) {
     // l2 is amount of the screw that are bigger for sliding through the hole
-    tap_z = 1.5;
+    tap_z = 1.9;
     union() {
         cylinder(d = C_M3_DIAMETER_THREAD, h= l);
         cylinder(d = C_M3_DIAMETER, h= l2);
@@ -21,3 +21,13 @@ module common_button_screw_tap(l = 10, l2 = 0) {
     }
 }
 
+module roundedcube(xdim ,ydim ,zdim,rdim){
+    hull(){
+        fn=30;
+        translate([rdim,rdim,0]) cylinder(r=rdim, h=zdim, $fn=fn);
+        translate([xdim-rdim,rdim,0])cylinder(r=rdim, h=zdim, $fn=fn);
+
+        translate([rdim,ydim-rdim,0]) cylinder(r=rdim, h=zdim, $fn=fn);
+        translate([xdim-rdim,ydim-rdim,0]) cylinder(r=rdim, h=zdim, $fn=fn);
+    }
+}

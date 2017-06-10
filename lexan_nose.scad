@@ -1,5 +1,6 @@
 use <lexan_main-chassie.scad>;
 use <caster_hub.scad>;
+use <common_parts.scad>
 //basefornewnose
 //%translate([28, -60, 0])  rotate([0,0,180]) import("basefornewnose.stl", convexity=10);
 
@@ -55,7 +56,7 @@ s_plate_y = 11; // hur långt bak plattan sticker ut
 s_plate_h_y = 6.1; // hur långt bak hålet ska va
 
 // skruvar
-$fs= 0.4;
+//$fs= 0.4;
 m3_d = 3; // hål som en skruv inte ska fästa i
 m3_d_s = 2.8; // hål som skruven ska skapa gängor i
 
@@ -82,6 +83,8 @@ translate([0,240,0]) lower_arm();
 translate([0,240,0]) arm_plate();
 
 translate([0,240,0]) upper_arm();
+
+translate([0,115,30]) upper_arm_plate_p();
 
 // ###################################################
 color("yellow") %mirror([1,0,0]) translate([0,240,0]) upper_arm();
@@ -131,9 +134,12 @@ module nose_p() {
             mirror([1,0,0]) upper_arm_mount();
             
         }
+        
+        // skruvar fäste main chassie
+        translate([ 15, 8, 0]) rotate([0,0,0]) common_flat_screw_tap();
+        translate([-15, 8, 0]) rotate([0,0,0]) common_flat_screw_tap();
+        
         //utsågning för skruvar i framfäste
-        translate([ 15, 8, 9.99]) rotate([180,0,0]) flat_screw_tap();
-        translate([-15, 8, 9.99]) rotate([180,0,0]) flat_screw_tap();
         translate([ 15, 8, 0]) cylinder(d=m3_d, h= 5);
         translate([-15, 8, 0]) cylinder(d=m3_d, h= 5);
         
@@ -195,11 +201,11 @@ module upper_arm_plate_p() {
     
     difference() {
         hull() {
-            translate([-ua1_x,n_y-ua1_y,0 ]) cylinder(d=8, h=2);
-            translate([ua1_x,n_y-ua1_y,0 ]) cylinder(d=8, h=2);
+            translate([-ua1_x,n_y-ua1_y,0 ]) cylinder(d=8, h=2.5);
+            translate([ua1_x,n_y-ua1_y,0 ]) cylinder(d=8, h=2.5);
         }
-        translate([-ua1_x,n_y-ua1_y,0 ]) cylinder(d=m3_d, h=2);
-        translate([ua1_x,n_y-ua1_y,0 ]) cylinder(d=m3_d, h=2);
+        translate([-ua1_x,n_y-ua1_y,0 ]) cylinder(d=m3_d, h=2.5);
+        translate([ua1_x,n_y-ua1_y,0 ]) cylinder(d=m3_d, h=2.5);
         
     }
     
@@ -254,8 +260,8 @@ module lower_arm_mount_cut(dd=3) {
     translate([-la1_x, -la1_y, z_z-z_w]) cylinder(d=dd, h=z_w);
     translate([-la2_x, -la2_y, z_z-z_w]) cylinder(d=dd, h=z_w);
     //translate([-62, -25, z_z-z_w]) cylinder(d=dd, h=z_w);
-    translate([-la1_x, -la1_y, 11]) rotate([180,0,0]) flat_screw_tap(l=11.1);
-    translate([-la2_x, -la2_y, 11]) rotate([180,0,0]) flat_screw_tap(l=11.1);
+    translate([-la1_x, -la1_y, 0])  common_flat_screw_tap(l=11.1);
+    translate([-la2_x, -la2_y, 0]) common_flat_screw_tap(l=11.1);
     
     
 }
@@ -309,8 +315,8 @@ module upper_arm_mount_cut(dd=3) {
     translate([-ua1_x, -ua1_y, 0]) cylinder(d=dd, h=z_w+15+z_z);
     translate([-ua2_x, -ua2_y, 0]) cylinder(d=dd, h=z_w+15+z_z);
     //translate([-62, -25, z_z-z_w])  cylinder(d=dd, h=z_w);
-    translate([-ua1_x, -ua1_y, 11]) rotate([180,0,0]) flat_screw_tap(l=11.1);
-    translate([-ua2_x, -ua2_y, 11]) rotate([180,0,0]) flat_screw_tap(l=11.1);
+    translate([-ua1_x, -ua1_y, 0]) common_flat_screw_tap(l=11.1);
+    translate([-ua2_x, -ua2_y, 0]) common_flat_screw_tap(l=11.1);
     
 }
 
@@ -339,104 +345,9 @@ module servo_mount() {
     }
 }
 
-module main_chassie() {
-    difference() {
-        union() {
-            translate([0, 0, p_offset_z]) plattan();
-            translate([0, 0, p_offset_z]) mirror([1,0,0])plattan();
-            translate([-b_x/2, 0, 0]) cube([b_x, b_y, b_z]);
-            
-            // fjädrar
-            translate([s_x, p_bak_offset, b_z]) sido_fjadrar();
-            translate([-s_x, p_bak_offset, b_z]) mirror([1,0,0])sido_fjadrar();
-            
-            // framfästet
-            translate([0,b_y,0]) front_mount();
-            translate([0,b_y,0]) mirror([1,0,0]) front_mount();
-            
-            // sidofästen
-            translate([b_x/2, sf_y, 0]) mirror([0,0,0]) sido_fasten();
-            translate([-b_x/2, sf_y, 0]) mirror([1,0,0]) sido_fasten();
-            
-            // fäste för plattan med dämparen
-            translate([28, 32, p_offset_z+p_z]) hoger_faste();
-            translate([-28, 32, p_offset_z+p_z]) vanster_faste();
-            
-            // sidodämparen
-            translate([0, 0, p_offset_z+p_z])sido_dampare();
-        }
-        translate([-batteri_x/2, bakre_wall, b_offset_z]) batteri();
-        translate([-batteri_x/2, bakre_wall+batteri_y+lb_wall, b_offset_z]) lilla_bad();
-        
-        //utsågning för skruvar i framfäste
-        translate([0,b_y,0]) front_mount_cut();
-        translate([0,b_y,0]) mirror([1,0,0]) front_mount_cut();
-        
-        bak_screw_cut();
-        
-        
-    }
-}
 
-module plattan() {
-    
-    hull() {
-        translate([p_x-4, p_y-4+long_extra2, 0]) cylinder(r=4, h=p_z);
-        translate([p_x-4, p_y-34+long_extra2, 0]) cylinder(r=4, h=p_z);
-        translate([0, p_bak_offset+long_extra2, 0]) cube([p_b_x, p_y-p_bak_offset, p_z]);
-        translate([0, p_bak_offset+long_extra2, 0]) cube([1,p_y-p_bak_offset+11,p_z]);
-        
-        
-    }
-    translate([0, p_bak_offset, 0]) cube([p_b_x-4, p_y-p_bak_offset, p_z]);
-    
-    hull() {
-        translate([b_x/2-1,p_bak_offset,-2]) cube([1, b_y-p_bak_offset, 2]);
-        translate([b_x/2+1,p_bak_offset,0]) cube([1, b_y-p_bak_offset, 2]);
-        translate([b_x/2-3,p_bak_offset,0]) cube([1, b_y-p_bak_offset, 2]);
-    }
-    
-}
 
-module batteri() {
-    batteri = [batteri_x, batteri_y, batteri_z];
-    cube(batteri);
-    //cube([batteri_x, batteri_y, batteri_z]);
-}
 
-module sido_fasten() {
-    skruv_z = 5;
-    bredd = 9.5;
-    
-    difference() {
-        hull() {
-            translate([0, -2, 0]) cube([bredd, 4, 1]);
-            translate([0, -6, skruv_z-1]) cube([bredd, 12, 1]);
-            translate([0, -6, p_offset_z]) cube([bredd, 12, 1]);
-        }
-        translate([0,0,skruv_z]) rotate([0,90,0]) flat_screw_tap(l=bredd);
-    }
-    
-}
-
-module sido_fjadrar() {
-    extra_x = s_x - batteri_x/2;
-    difference() {
-        union() {
-            translate([-s_wall_x/2, 0, 0]) cube([s_wall_x, s_wall, s_z]);
-            translate([-s_wall_x/2, -s_plate_y, s_z-s_plate_z]) cube([s_wall_x, s_plate_y, s_plate_z]);
-        }
-        translate([0, -s_plate_h_y, s_z-s_plate_z]) flat_screw_tap(l=s_plate_z);
-    }
-    translate([-extra_x, 0, 0]) cube([extra_x, s_wall, 5]);
-}
-
-module sido_dampare() {
-    difference() {
-        translate([17,0,0]) cube([9,6,11]);
-        translate([17+9/2, 3, 3+0.01]) flat_screw_tap(l=8);
-    }
-}
 
 module flat_screw_tap(l = 10) {
     tap_z = 1.2;
@@ -458,75 +369,4 @@ module screw(l = 10) {
     cylinder(d = m3_d_s, h= l);
 }
 
-module lilla_bad() {
-    
-    cube([lb_x, lb_y, lb_z]);
-}
 
-module front_mount() {
-   // hull() {
-        translate([fm_screw_dist_x/2, 0, 5+fm_screw_dist_z]) rotate([90]) cylinder(d=10, h=fm_y);
-        
-    //}
-    translate([fm_screw_dist_x/2, -fm_y,  5+fm_screw_dist_z]) cube([5, fm_y, 5]);
-    translate([fm_screw_dist_x/2-4.5-5, -fm_y,  b_z]) cube([5, fm_y, 5]);
-    translate([fm_screw_dist_x/2-4.5, -fm_y,  0]) cube([5+4, fm_y, 5+fm_screw_dist_z]);
-}
-
-module front_mount_cut() {
-    
-    translate([fm_screw_dist_x/2, -10+0.01, 5])                 rotate([-90]) flat_screw(l = 10);
-    translate([fm_screw_dist_x/2, -10+0.01, 5+fm_screw_dist_z]) rotate([-90]) flat_screw(l = 10);
-    
-    translate([fm_screw_dist_x/2, 0+0.01, 5])                 rotate([-90]) cylinder(d=5, h=22);
-    translate([fm_screw_dist_x/2, 0+0.01, 5+fm_screw_dist_z]) rotate([-90]) cylinder(d=5, h=22);
-    
-    translate([fm_screw_dist_x/2-5-4.5, 0, b_z+5]) rotate([90]) cylinder(d=10, h=fm_y);
-    
-    translate([b_x/2, -fm_y,  0]) cube([5, fm_y, b_z+fm_screw_dist_z]);
-    
-    //muttrar
-    
-    translate([fm_screw_dist_x/2, -fm_y-3, 5]) rotate([0,90,0]) rotate([-90,0,0])  cylinder(d=7, h=6, $fn=6);
-    translate([fm_screw_dist_x/2, -fm_y-3, 5+fm_screw_dist_z]) rotate([0,90,0]) rotate([-90,0,0])  cylinder(d=7, h=6, $fn=6);
-    
-}
-
-module hoger_faste() {
-    hh = 16;
-    difference() {
-        hull() {
-            translate([0,-2,0]) cylinder(d=10, h=hh);
-            translate([0,4,0]) cylinder(d=10, h=hh);
-        }
-        flat_screw_tap(l = hh);
-    }
-}
-
-module vanster_faste() {
-    hh = 16;
-    difference() {
-        hull() {
-            translate([0,-2,0]) cylinder(d=10, h=hh);
-            translate([0,14,0]) cylinder(d=10, h=hh);
-        }
-        flat_screw_tap(l = hh);
-        translate([0,13,0]) flat_screw_tap(l = hh);
-    }
-}
-
-module bak_screw_cut() {
-    translate([0,10-0.01,5]) rotate([90,0,0]) flat_screw_tap(l = 10);
-    translate([0,bakre_wall+0.01,5]) rotate([90,0,0]) cylinder(d=7, h=3, $fn=6);
-}
-
-module roundedcube(xdim ,ydim ,zdim,rdim){
-    hull(){
-        fn=30;
-        translate([rdim,rdim,0]) cylinder(r=rdim, h=zdim, $fn=fn);
-        translate([xdim-rdim,rdim,0])cylinder(r=rdim, h=zdim, $fn=fn);
-
-        translate([rdim,ydim-rdim,0]) cylinder(r=rdim, h=zdim, $fn=fn);
-        translate([xdim-rdim,ydim-rdim,0]) cylinder(r=rdim, h=zdim, $fn=fn);
-    }
-}

@@ -9,6 +9,7 @@ use <wingadapter.scad>
 use <hpdf1_rear_cradle_universal.scad>
 use <frontwing.scad>
 use <rear_axle.scad>
+use <custom_spring.scad>
 
 param1=0;   // must be initalised
 len=param1; // param1 passed via -D on cmd-line
@@ -135,6 +136,11 @@ module frontwingflex() {
     rotate([180,0,0])frontwingflex_p();
     
 }
+//skid_guard();
+module skid_guard() {
+    rotate([180,0,0])skid_guard_p();
+    
+}
 //translate([20,1,0]) indrive();
 module indrive() {
     
@@ -149,5 +155,11 @@ module outdrive() {
 module left_wheelmount() {
     
     rotate([180,0,0]) left_wheelmount_p();
+}
+
+//plastic_rear_spring();
+module plastic_rear_spring() {
+    
+    rotate([0,0,0]) rear_spring_p();
 }
 

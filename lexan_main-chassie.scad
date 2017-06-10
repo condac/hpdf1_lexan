@@ -1,6 +1,7 @@
 use <lexan_nose.scad>;
 use <lexan_side_stab.scad>
 use <hpdf1_rear_cradle_universal.scad>
+use <common_parts.scad>
 include <tunable_constants.scad>;
 
 
@@ -69,6 +70,9 @@ fm_y = 8;
 fm_z = 30;
 fm_screw_dist_z = 20;
 fm_screw_dist_x = 44;
+
+    nose_main_mount_y = 124.5;
+    nose_main_mount_space = 8;
 
 // lilla badkaret
 lb_wall = 2; // väggen mellan lilla och batteriet
@@ -180,8 +184,8 @@ module main_chassie_p() {
         //translate([-batteri_x/2, bakre_wall+batteri_y+lb_wall, b_offset_z]) lilla_bad();
         
         //utsågning för skruvar i framfäste
-        translate([15,108,9.99]) rotate([180,0,0]) flat_screw_tap();
-        translate([-15,108,9.99]) rotate([180,0,0]) flat_screw_tap();
+        translate([15,nose_main_mount_y-nose_main_mount_space,0])  common_flat_screw_tap();
+        translate([-15,nose_main_mount_y-nose_main_mount_space,0]) common_flat_screw_tap();
         
         
         bak_screw_cut();
@@ -308,25 +312,28 @@ module body_posts_p() {
 module receiver_plate_p() {
     translate([0,0,pp3_z]) difference() {
         union() {
-            translate([0,pp2_y,0]) crossplate_res(pp2_x, pp3_x, pp3_y-pp2_y, 2, 4);
+            translate([0,pp2_y,0]) crossplate_res(pp2_x, pp3_x, pp3_y-pp2_y+1, 2.5, 4);
             
         }
         
     }
 }
 module nose_plate_p() {
+    nose_main_mount_y = 124.5;
+    nose_main_mount_space = 8;
+    
     translate([0,0,4]) difference() {
         union() {
-            translate([0,108,0]) crossplate(15, 15, 25, 4, 3);
-            translate([-15,108,0]) cylinder(d=6, h=4);
-            translate([15,108,0]) cylinder(d=6, h=4);
-            translate([-15,108+25,0]) cylinder(d=6, h=4);
-            translate([15,108+25,0]) cylinder(d=6, h=4);
+            translate([0,nose_main_mount_y-nose_main_mount_space,0]) crossplate(15, 15, nose_main_mount_space*2, 4, 3);
+            translate([-15,nose_main_mount_y-nose_main_mount_space,0]) cylinder(d=6, h=4);
+            translate([15,nose_main_mount_y-nose_main_mount_space,0]) cylinder(d=6, h=4);
+            translate([-15,nose_main_mount_y+nose_main_mount_space,0]) cylinder(d=6, h=4);
+            translate([15,nose_main_mount_y+nose_main_mount_space,0]) cylinder(d=6, h=4);
         }
-        translate([-15,108,0]) cylinder(d=m3_d_s, h=4);
-        translate([15,108,0]) cylinder(d=m3_d_s, h=4);
-        translate([-15,108+25,0]) cylinder(d=m3_d_s, h=4);
-        translate([15,108+25,0]) cylinder(d=m3_d_s, h=4);
+        translate([-15,nose_main_mount_y-nose_main_mount_space,0]) cylinder(d=m3_d_s, h=4);
+        translate([15,nose_main_mount_y-nose_main_mount_space,0]) cylinder(d=m3_d_s, h=4);
+        translate([-15,nose_main_mount_y+nose_main_mount_space,0]) cylinder(d=m3_d_s, h=4);
+        translate([15,nose_main_mount_y+nose_main_mount_space,0]) cylinder(d=m3_d_s, h=4);
         
     }
 }
