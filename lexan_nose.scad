@@ -38,6 +38,20 @@ b_z = 14;
 
 bakre_wall = 6;
 
+
+// bärarmanas koordinater
+la1_x = 13; 
+la1_y = 42;
+la2_x = 15;
+la2_y = 63;
+
+ua1_x = 12;
+ua1_y = 32;
+ua2_x = 16;
+ua2_y = 83;
+
+lower_arm_thickness = 3.5;
+
 //plattan
 p_x = 132/2; // bredden på plattan delat med 2
 p_b_x = 100/2; // bredden på plattan bak
@@ -161,6 +175,8 @@ module nose_p() {
         // servot är ivägen för lower arm plate
         translate([la1_x,n_y-la1_y,n_z+11-3.5-1 ]) cylinder(d=11, h=n_z+11-3.5-1);
         translate([-la1_x,n_y-la1_y,n_z+11-3.5-1 ]) cylinder(d=11, h=n_z+11-3.5-1);
+        translate([la2_x,n_y-la2_y,n_z+11-3.5-1 ]) cylinder(d=11, h=lower_arm_thickness+1.5);
+        translate([-la2_x,n_y-la2_y,n_z+11-3.5-1 ]) cylinder(d=11, h=lower_arm_thickness+1.5);
         
         // vingfästen
         translate([0,n_y-wf_y,-1]) cylinder(d=4.2, h= n_z*2);
@@ -214,15 +230,6 @@ module upper_arm_plate_p() {
     
 }
 
-la1_x = 13;
-la1_y = 42;
-la2_x = 15;
-la2_y = 63;
-
-ua1_x = 12;
-ua1_y = 32;
-ua2_x = 16;
-ua2_y = 83;
 
 
 module arm_pin_p() {
@@ -232,7 +239,7 @@ module arm_pin_p() {
     }
 }
 module lower_arm() {
-    z_w = 3.5;
+    z_w = lower_arm_thickness;
     z_z = 14;
     
     difference() {
@@ -242,7 +249,7 @@ module lower_arm() {
                 translate([-62, -25, z_z-z_w]) cylinder(d=10, h=z_w);
             }
             hull() {
-                translate([-la2_x, -la2_y, z_z-z_w]) cylinder(d=6, h=z_w);
+                translate([-la2_x, -la2_y, z_z-z_w]) cylinder(d=8, h=z_w);
                 translate([-52, -25, z_z-z_w]) cylinder(d=10, h=z_w);
             }
         }
@@ -258,7 +265,7 @@ module lower_arm_mount() {
     translate([-la2_x,n_y-la2_y,0 ]) cylinder(d=10, h=n_z+11-3.5-1);
 }
 module lower_arm_mount_cut(dd=3) {
-    z_w = 3.5;
+    z_w = lower_arm_thickness;
     z_z = 14;
     translate([-la1_x, -la1_y, z_z-z_w]) cylinder(d=dd, h=z_w);
     translate([-la2_x, -la2_y, z_z-z_w]) cylinder(d=dd, h=z_w);
