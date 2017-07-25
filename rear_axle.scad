@@ -41,6 +41,9 @@ wheel_hex = 16.2;
 drive_clear = 0.2; // the distance between the gear and the outer rim that hold the plate in place
 cone_end= 1;
 
+gear_id = 9.4;
+gear_adapter_d = 8.8;
+
 %rearCradle();
 
 // rear axle
@@ -52,6 +55,11 @@ mm_x = 22; // Cradle inner offset from car center UPDATE FROM CRADLE DRAwING IF 
 cradle_wall = 7; // Cradle thickness on motormount + space for washer UPDATE FROM CRADLE DRAwING IF IT HAS CHANGED
 
 gear_center = mm_x+14; // mm_x + 13
+
+
+// Splines for glue to flow through
+splines = axle_d + 0.5;
+
 
 //rear_axle_assembly();
 translate([190/2, -80,0]) cube([5,10,50]) ;
@@ -145,6 +153,7 @@ module indrive_p() {
             translate([0,0,_startpoint]) cylinder(d1=plate_d1+plate_wall-2,  d2=plate_d1+plate_wall, h= 2);
             translate([0,0,_startpoint+2]) cylinder(d=plate_d1+plate_wall, h= hh-2-cone_end);
             translate([0,0,_startpoint+2+hh-2-cone_end]) cylinder(d1=plate_d1+plate_wall, d2= plate_d1+0.8, h= cone_end);
+            //translate([0,0,_startpoint+2+hh-2]) cylinder(d=gear_id, h=ball_d);
         }
         
         //seal cut
@@ -154,10 +163,15 @@ module indrive_p() {
         translate([0,0,-ball_d/2-plate_h-seal_h/4]) diff_plate_cut();
         
         // axle cut
-        translate([0,0,_startpoint]) cylinder(d=axle_d, h=hh);
+        translate([0,0,_startpoint]) cylinder(d=axle_d, h=hh+20);
         
         // drive clear
         //translate([0,0,_startpoint+hh-drive_clear]) cylinder(d=50, h=drive_clear);
+        
+        //splines
+        translate([0,0,_startpoint]) cylinder(d=splines, h=hh, $fn=4);
+        translate([0,0,_startpoint]) rotate([0,0,45]) cylinder(d=splines, h=hh, $fn=4);
+        translate([0,0,_startpoint+hh/2]) rotate([0,0,45]) cylinder(d=splines, h=0.3);
     }
     // seal inner fix
     translate([0,0,-ball_d/2-plate_h-seal_h-0.3]) seal_fix();
@@ -260,4 +274,14 @@ module left_wheelmount_visual() {
     
 }
 
+module gear_adapter_p() {
+    //gear_id = 9.8;
+    //gear_adapter_d = 8.1;
+    
+    difference() {
+        cylinder(d=gear_id, h=4);
+        cylinder(d=gear_adapter_d, h=4);
+    }
+}
+    
 //%translate([-115, -67, -93])  rotate([0,-90,-90]) import("ref/Cradle.stl", convexity=10);

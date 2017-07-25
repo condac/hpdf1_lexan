@@ -156,8 +156,6 @@ module nose_p() {
         translate([0,6+27,0]) translate([-24/2+1, n_y-105-42/2, 1]) roundedcube(22, 42, 18, 0.5);
         // servokabel
         translate([0,6+27+8,0]) translate([-12/2,n_y-105 -42/2, 1]) cube([12, 42, 10]);
-        // servokabel bak
-        translate([0,6+27-8,0]) translate([-12/2,n_y-105 -42/2, 1]) cube([12, 42, 10]);
         // servot är ivägen för lower arm plate
         translate([la1_x,n_y-la1_y,n_z+11-3.5-1 ]) cylinder(d=11, h=n_z+11-3.5-1);
         translate([-la1_x,n_y-la1_y,n_z+11-3.5-1 ]) cylinder(d=11, h=n_z+11-3.5-1);

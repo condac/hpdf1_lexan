@@ -30,7 +30,7 @@ brl_x = bl_x;
 brl_y = br_y;
 
 //bottomplate constants
-bp_h = 3;
+bp_h = 3.5;
 
 
 
@@ -72,17 +72,20 @@ rdm_y  = -9;
 
 
 // rear wingplate screws
+wingPlate_z = 4;
 rwp_xr = 25;
 rwp_xl = -40;
-rwp_y  = -67;
+rwp_y  = -64-wingPlate_z;
 rwp_z1 = 15;
 rwp_z2 = rwp_z1+18;
+
 
 
 rearCradle();
 
 module rearCradle() {
     color("red") bottomPlate(wide= 50);
+    color("blue") bottomPlate();
     leftBulkhead();
     rightBulkhead();
     pivotClamp();
@@ -101,11 +104,11 @@ module bottomPlate(wide= 36) {
             }
             hull() {
                 translate([bfr_x, brr_y, 0]) cylinder(d=8, h=bp_h);
-                translate([bfr_x+7, brr_y+1, 0]) cylinder(d=7, h=bp_h);
+                translate([bfr_x+8, brr_y+0, 0]) cylinder(d=8, h=bp_h);
             }
             hull() {
-                translate([bfr_x+7, bfr_y, 0]) cylinder(d=6, h=bp_h);
-                translate([bfr_x+7, brr_y, 0]) cylinder(d=6, h=bp_h);
+                translate([bfr_x+8, bfr_y, 0]) cylinder(d=8, h=bp_h);
+                translate([bfr_x+8, brr_y, 0]) cylinder(d=8, h=bp_h);
             }
             
             hull() {
@@ -113,8 +116,8 @@ module bottomPlate(wide= 36) {
                 translate([brl_x, brl_y, 0]) cylinder(d=8, h=bp_h);
             }
             hull() {
-                translate([bfl_x, bfl_y, 0]) cylinder(d=8, h=bp_h);
-                translate([brl_x, brl_y, 0]) cylinder(d=8, h=bp_h);
+                translate([bfl_x, bfl_y-1, 0]) cylinder(d=10, h=bp_h);
+                translate([brl_x, brl_y, 0]) cylinder(d=10, h=bp_h);
             }
             hull() {
                 translate([bfl_x, bfl_y-2, 0]) cylinder(d=8, h=bp_h);
@@ -122,10 +125,12 @@ module bottomPlate(wide= 36) {
             }
             //Sidemount right
             hull() {
-                translate([bfr_x+6, brr_y, 0]) cylinder(d=6, h=bp_h);
+                translate([bfr_x+8, brr_y, 0]) cylinder(d=8, h=bp_h);
                 translate([wide-3, sm_y, 0]) cylinder(d=6, h=bp_h);
                 
             }
+            
+            
             
             //translate([bfr_x, bfr_y, 0]) cylinder(d=5, h=bp_h);
             //translate([bfl_x, bfl_y, 0]) cylinder(d=5, h=bp_h);
@@ -146,21 +151,41 @@ module bottomPlate(wide= 36) {
         translate([0, 0, pivot_z]) rotate([90,0,0]) cylinder(d=pivot_d, h=pivot_y);
         translate([0, -pivot_y, pivot_z]) rotate([90,0,0]) cylinder(d=pivot_d+2, h=pivot_y);
         // All screws
+        mount_l = 20;
+        translate([wide-mount_l,sm_y,sm_z]) rotate([0,90,0]) cylinder(d=C_M3_DIAMETER_THREAD, h=mount_l);
         allScrews();
     }
 }
 module sidemount(sm_x = 36) {
-    mount_l = 20; // Lenght of the total screw length
+    mount_l = 26; // Lenght of the total screw length
     mount_d = 6;
+    tjockis_l = 10;
+    tjockis_d = 8;
+
     difference() {
         union() {
             hull() {
                 translate([sm_x-mount_l,sm_y,sm_z]) rotate([0,90,0]) cylinder(d=mount_d, h=mount_l);
                 translate([sm_x-mount_l,sm_y-mount_d/2,0]) cube([mount_l,mount_d,bp_h]);
+                translate([sm_x-mount_l,sm_y-2,sm_z]) rotate([0,90,0]) cylinder(d=mount_d, h=mount_l);
+                translate([sm_x-mount_l,sm_y-mount_d/2-2,0]) cube([mount_l,mount_d,bp_h]);
             }
-            translate([sm_x-8,sm_y,sm_z]) rotate([0,90,0]) cylinder(d=mount_d+2, h=8);
+            
+            if (sm_x>40) {
+                echo("wide sidespring");
+                hull() {
+                    translate([sm_x-tjockis_l,sm_y,sm_z]) rotate([0,90,0]) cylinder(d=tjockis_d, h=tjockis_l);
+                    translate([sm_x-tjockis_l,sm_y+3,0])  cube([tjockis_l,6,tjockis_d/2+sm_z]);
+                    translate([sm_x-tjockis_l,sm_y-6,0])  cube([tjockis_l,mount_d,1]);
+                }
+            } else {
+                hull() {
+                    translate([sm_x-tjockis_l,sm_y,sm_z]) rotate([0,90,0]) cylinder(d=tjockis_d, h=tjockis_l);
+                    translate([sm_x-tjockis_l,sm_y-6,0])  cube([tjockis_l,mount_d,1]);
+                }
+            }
         }
-        translate([sm_x-mount_l,sm_y,sm_z]) rotate([0,90,0]) cylinder(d=3, h=mount_l);
+        translate([sm_x-mount_l,sm_y,sm_z]) rotate([0,90,0]) cylinder(d=C_M3_DIAMETER_THREAD, h=mount_l);
     }
 }
 module leftBulkhead() {
@@ -324,7 +349,7 @@ module pivotClamp() {
 }
 
 module wingPlate() {
-    zz=3;
+    zz=wingPlate_z;
     
     wing_dist = 29;
     // made from Kristians wingplate as reference
@@ -389,6 +414,9 @@ module allScrews() {
     translate([rwp_xr, rwp_y, rwp_z2]) rotate([-90,0,0]) common_button_screw_tap(l = 12, l2=3);
     translate([rwp_xl, rwp_y, rwp_z1]) rotate([-90,0,0]) common_button_screw_tap(l = 12, l2=3);
     translate([rwp_xl, rwp_y, rwp_z2]) rotate([-90,0,0]) common_button_screw_tap(l = 12, l2=3);
+    
+    translate([rwp_xl, rwp_y, ra_z]) rotate([-90,0,0]) common_button_screw_tap(l = 12, l2=3);
+    translate([rwp_xr, rwp_y, ra_z]) rotate([-90,0,0]) common_button_screw_tap(l = 12, l2=3);
 }
 
 

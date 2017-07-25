@@ -10,6 +10,8 @@ use <hpdf1_rear_cradle_universal.scad>
 use <frontwing.scad>
 use <rear_axle.scad>
 use <custom_spring.scad>
+use <custom_steering_link.scad>
+
 
 param1=0;   // must be initalised
 len=param1; // param1 passed via -D on cmd-line
@@ -163,3 +165,13 @@ module plastic_rear_spring() {
     rotate([0,0,0]) rear_spring_p();
 }
 
+//steering_link();
+module steering_link() {
+     steering_link_p();
+     translate([8,,0]) steering_link_p();
+}
+//gear_adapter();
+module gear_adapter() {
+    
+    gear_adapter_p();
+}

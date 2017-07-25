@@ -1,11 +1,13 @@
 //
 use <lexan_nose.scad>
+use <common_parts.scad>
+include <tunable_constants.scad>;
 $fs=0.1;
 
 caster = 4;
 camber = 2;
 
-kingpin_d = 3.5;
+kingpin_d = C_KINGPIN_LOOSE; //3.5;
 
 space = 19; // mellanrummet inuti hubben
 

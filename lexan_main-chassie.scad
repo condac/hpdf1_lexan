@@ -178,8 +178,8 @@ module main_chassie_p() {
         
         
         // för att kunna ta ut batteriet på sidan
-        translate([batteri_y/2-2, bakre_wall+4, b_offset_z+5]) rotate([0,0,90]) batteri();
-        translate([batteri_y/2+2, bakre_wall+4, b_offset_z+5]) rotate([0,0,90]) batteri();
+        translate([batteri_y/2-2, bakre_wall+4, b_offset_z+3]) rotate([0,0,90]) batteri();
+        translate([batteri_y/2+2, bakre_wall+4, b_offset_z+3]) rotate([0,0,90]) batteri();
         
         //translate([-batteri_x/2, bakre_wall+batteri_y+lb_wall, b_offset_z]) lilla_bad();
         

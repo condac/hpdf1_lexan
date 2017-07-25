@@ -3,12 +3,12 @@
 
 
 
-body_post2_p();
+body_post_p();
 
 module body_post_p() {
     dd = 5.75;
     hh = 4.4;
-    l = 50;
+    l = 32;
 
     hole = 2;
 
@@ -22,7 +22,7 @@ module body_post_p() {
         
         dist = 4;
         for (a =[dist:dist:l]) {
-            translate([-100, 0, a]) rotate([0,90,]) cylinder(d=hole, h=400);
+            translate([-100, 0, a-2]) rotate([0,90,]) cylinder(d=hole, h=400);
         }
         
     }

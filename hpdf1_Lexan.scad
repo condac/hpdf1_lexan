@@ -24,8 +24,8 @@ rear_axle_assembly();
 
 color("red")nose_p();
 
-translate([0,0,4]) side_stab_p();
-translate([0,0,4]) mirror([1,0,0]) side_stab_p();
+translate([-3,0,4]) side_stab2_p();
+translate([3,0,4]) mirror([1,0,0]) side_stab2_p();
 
 translate([0,240,0]) union() {
     upper_arm();
