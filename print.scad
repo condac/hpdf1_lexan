@@ -11,7 +11,7 @@ use <frontwing.scad>
 use <rear_axle.scad>
 use <custom_spring.scad>
 use <custom_steering_link.scad>
-
+use <side_damper.scad>
 
 param1=0;   // must be initalised
 len=param1; // param1 passed via -D on cmd-line
@@ -174,4 +174,19 @@ module steering_link() {
 module gear_adapter() {
     
     gear_adapter_p();
+}
+//wingelement();
+module wingelement() {
+    rotate([90,0,0]) wingelement_p();
+    translate([0,-20,0])  rotate([0,0,180]) mirror([1,0,0]) rotate([90,0,0]) wingelement_p();
+}
+
+module spur_gear() {
+    
+    spur_gear_p();
+}
+//side_damper();
+module side_damper() {
+    side_damp_in_p();
+    translate([0,10,0])  side_damp_out_p();
 }

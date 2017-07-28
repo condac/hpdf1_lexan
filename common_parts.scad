@@ -31,3 +31,8 @@ module roundedcube(xdim ,ydim ,zdim,rdim){
         translate([xdim-rdim,ydim-rdim,0]) cylinder(r=rdim, h=zdim, $fn=fn);
     }
 }
+
+module cylinder_outer(height,radius,fn){
+   fudge = 1/cos(180/fn);
+   cylinder(h=height,r=radius*fudge,$fn=fn);
+}

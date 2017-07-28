@@ -11,6 +11,8 @@ use <wingadapter.scad>
 use <hpdf1_rear_cradle_universal.scad>
 include <tunable_constants.scad>;
 
+use <MCAD/involute_gears.scad>
+
 
 target_width = 188;
 
@@ -29,6 +31,8 @@ plate_h = 1.5; // thickness
 
 plate_wall = 1.2*2; // thickness of the wall that hold the washer plate in place, make it a multiple of your nozzle size for best result
 ball_d = 3.175;
+ball_extra_hole = 0.2; // extra diameter for printed gear holes
+ball_printed_d = ball_d + ball_extra_hole;
 //rubber sealing
 seal_d1 = 25;
 seal_d2 = 16;
@@ -56,6 +60,8 @@ cradle_wall = 7; // Cradle thickness on motormount + space for washer UPDATE FRO
 
 gear_center = mm_x+14; // mm_x + 13
 
+// Printed gear parametsers
+gear_pitch = 180;
 
 // Splines for glue to flow through
 splines = axle_d + 0.5;
@@ -283,5 +289,26 @@ module gear_adapter_p() {
         cylinder(d=gear_adapter_d, h=4);
     }
 }
-    
+translate([0,0,-20])spur_gear_p();
+
+module spur_gear_p() {
+    thickness = 2.8;
+    difference() {
+       translate([0,0,0]) gear (
+            number_of_teeth=40, 
+            circular_pitch=gear_pitch, 
+            pressure_angle = 20,
+            gear_thickness = 6,        
+            rim_thickness = 6);
+        //translate([0,0,-14]) import("ref/Spur_Gear.stl", convexity=10);
+        cylinder(d=C_12MM_BEARING_D, h=50);
+        translate([0,0,thickness]) cylinder(d=33, h=50);
+        
+        for (a =[0:360/8:360]) {
+            rotate([0,0,a]) translate([23/2,0,0]) cylinder(d=ball_printed_d, h=50);
+        }
+        
+    }
+
+}
 //%translate([-115, -67, -93])  rotate([0,-90,-90]) import("ref/Cradle.stl", convexity=10);
