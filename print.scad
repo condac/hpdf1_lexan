@@ -2,6 +2,7 @@
 
 use <lexan_main-chassie.scad>
 use <lexan_nose.scad>
+use <lexan_nose_legacy.scad>
 use <lexan_side_stab.scad>
 use <lexan_steering_hub.scad>
 use <bodyposts.scad>
@@ -12,6 +13,8 @@ use <rear_axle.scad>
 use <custom_spring.scad>
 use <custom_steering_link.scad>
 use <side_damper.scad>
+use <front_body.scad>
+
 
 param1=0;   // must be initalised
 len=param1; // param1 passed via -D on cmd-line
@@ -39,7 +42,9 @@ module battery_plate() {
     battery_plate_p();
 }
 
-
+module legacy_body_battery_plate() { 
+    legacy_body_battery_plate_p();
+}
 module receiver_plate() {
     receiver_plate_p();
 }
@@ -165,6 +170,39 @@ module plastic_rear_spring() {
     rotate([0,0,0]) rear_spring_p();
 }
 
+module plastic_rear_spring_3() {
+    
+    rotate([0,0,0]) rear_spring_p(spring_h=3);
+}
+module plastic_rear_spring_4() {
+    
+    rotate([0,0,0]) rear_spring_p(spring_h=4);
+}
+module plastic_rear_spring_5() {
+    
+    rotate([0,0,0]) rear_spring_p(spring_h=5);
+}
+module plastic_rear_spring_6() {
+    
+    rotate([0,0,0]) rear_spring_p(spring_h=6);
+}
+module plastic_rear_spring_7() {
+    
+    rotate([0,0,0]) rear_spring_p(spring_h=7);
+}
+module plastic_rear_spring_8() {
+    
+    rotate([0,0,0]) rear_spring_p(spring_h=8);
+}
+module plastic_rear_spring_9() {
+    
+    rotate([0,0,0]) rear_spring_p(spring_h=9);
+}
+module plastic_rear_spring_10() {
+    
+    rotate([0,0,0]) rear_spring_p(spring_h=10);
+}
+
 //steering_link();
 module steering_link() {
      steering_link_p();
@@ -185,8 +223,33 @@ module spur_gear() {
     
     spur_gear_p();
 }
+module pinion_gear() {
+    
+    pinion_gear_p();
+}
 //side_damper();
 module side_damper() {
     side_damp_in_p();
     translate([0,10,0])  side_damp_out_p();
+}
+module legacy_nose_body_mount_plate() {
+    
+    legacy_nose_body_mount_plate_p();
+}
+module legacy_body_mount_plate() {
+    
+    legacy_body_mount_plate_p();
+}
+
+module legacy_nose() {
+    
+    legacy_nose_p();
+}
+
+module front_body_broken() {
+    front_body_p();
+}
+
+module front_mount() {
+    front_mount_p();
 }
