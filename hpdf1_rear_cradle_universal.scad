@@ -84,7 +84,7 @@ rwp_z2 = rwp_z1+18;
 rearCradle();
 
 module rearCradle() {
-    color("red") bottomPlate(wide= 50);
+    bottomPlate(wide= 50); //color("red") 
     color("blue") bottomPlate();
     leftBulkhead();
     rightBulkhead();
@@ -116,7 +116,8 @@ module bottomPlate(wide= 36) {
                 translate([brl_x, brl_y, 0]) cylinder(d=8, h=bp_h);
             }
             hull() {
-                translate([bfl_x, bfl_y-1, 0]) cylinder(d=10, h=bp_h);
+                translate([bfl_x, bfl_y-1, 0]) cylinder(d=12, h=bp_h);
+                translate([-wide+5, bfl_y-1, 0]) cylinder(d=10, h=bp_h);
                 translate([brl_x, brl_y, 0]) cylinder(d=10, h=bp_h);
             }
             hull() {

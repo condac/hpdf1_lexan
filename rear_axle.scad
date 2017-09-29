@@ -313,9 +313,9 @@ module spur_gear_p() {
 
 }
 
-translate([0,0,-40])pinion_gear_p();
+translate([0,0,-40])pinion_gear_p(tt =14);
 
-module pinion_gear_p() {
+module pinion_gear_p(tt = 18) {
     thickness = 2.8;
     motor_shaft = 3.17+0.4;
     nut_h = 2.6;
@@ -323,13 +323,13 @@ module pinion_gear_p() {
     difference() {
         union() {
             translate([0,0,0]) gear (
-            number_of_teeth=18, 
+            number_of_teeth=tt, 
             circular_pitch=gear_pitch, 
             pressure_angle = 20,
             gear_thickness = 6,
             rim_thickness = 6,
             hub_thickness = 6);
-            cylinder(d=15, h=13);
+            translate([0,0,6])cylinder(d=15, h=13-6);
             cylinder(d=10, h=13+5);
             
             translate([0,0,7])cylinder(d=16, h=5);

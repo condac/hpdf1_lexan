@@ -81,9 +81,10 @@ module side_stab_x2() {
     side_stab_p();
     translate([8,-8,0])side_stab_p();
 }
+
 module side_stab2_x2() {
     rotate([0,90,0]) side_stab2_p();
-     translate([8,-8,0])rotate([0,90,0])side_stab2_p();
+     translate([10,-8,0])rotate([0,90,0])side_stab2_p();
 }
 //steering_hubs();
 module steering_hubs() {
@@ -223,9 +224,21 @@ module spur_gear() {
     
     spur_gear_p();
 }
-module pinion_gear() {
+module pinion_gear_18t() {
     
-    pinion_gear_p();
+    pinion_gear_p(tt=18);
+}
+module pinion_gear_17t() {
+    
+    pinion_gear_p(tt=17);
+}
+module pinion_gear_16t() {
+    
+    pinion_gear_p(tt=16);
+}
+module pinion_gear_15t() {
+    
+    pinion_gear_p(tt=15);
 }
 //side_damper();
 module side_damper() {
