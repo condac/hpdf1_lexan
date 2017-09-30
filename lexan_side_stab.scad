@@ -53,8 +53,14 @@ module side_stab2_p() {
     
     difference() {
         union() {
-            translate([s_x1,-4,0])rotate([0,90,0]) cylinder(d=10, h=s_w);
-            translate([s_x2,63,0])rotate([0,90,0]) cylinder(d=10, h=s_w);
+            hull() {
+                translate([s_x1,-4,0])rotate([0,90,0]) cylinder(d=10, h=s_w);
+                translate([s_x1,-4+10,0])rotate([0,90,0]) cylinder(d=6, h=s_w);
+            }
+            hull() {
+                translate([s_x2,63,0])rotate([0,90,0]) cylinder(d=10, h=s_w);
+                translate([s_x2,63-10,0])rotate([0,90,0]) cylinder(d=6, h=s_w);
+            }
             translate([s_x1,-8,-s_z/2]) cube([s_w,10,s_z]);
             //translate([s_x1,0,-s_z/2]) cube([s_x2-s_x1,5,s_z]);
             hull() {
