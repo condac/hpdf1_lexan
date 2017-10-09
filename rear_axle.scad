@@ -58,7 +58,7 @@ ra_y = -53;
 mm_x = 22; // Cradle inner offset from car center UPDATE FROM CRADLE DRAwING IF IT HAS CHANGED
 cradle_wall = 7; // Cradle thickness on motormount + space for washer UPDATE FROM CRADLE DRAwING IF IT HAS CHANGED
 
-gear_center = mm_x+14; // mm_x + 13
+gear_center = mm_x+14.5; // mm_x + 13
 
 // Printed gear parametsers
 gear_pitch = 180;
