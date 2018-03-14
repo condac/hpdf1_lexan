@@ -27,9 +27,9 @@ b_offset_z = 2; // höjden batteriet ligger på, det som blir basens tjocklek i 
 servo_hojd = 20.5; // höjden på servot upp och ner till fästet
 
 translate()cube(2);
-translate([0,240-90,45]) rotate([-25,180,0]) bigservo();
+translate([0,240-100,28]) rotate([-90,180,0]) bigservo();
 module bigservo() {
-    translate([0,9,49]) rotate([0,180,0]) rotate([0,0,-90]) rotate([90,0,0]) import("ref/servoarm.stl", convexity=10);
+    translate([0,9,49]) rotate([0,180,0]) rotate([0,0,90]) rotate([90,0,0]) import("ref/servoarm.stl", convexity=10);
     translate([-10,-55/2,30-3.5]) cube([20,55,3.5]);
     translate([-10,-41/2,0]) cube([20,41,38]);
 }

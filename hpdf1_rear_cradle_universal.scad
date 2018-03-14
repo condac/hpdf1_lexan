@@ -57,11 +57,11 @@ lb_x = -43;
 // Sidemounts
 //sm_x = 36; // change this to 36 for original narrow HPDF1. 50 for wider lexan version
 sm_y = -4;
-sm_z = 5;
+sm_z = 7;
 
 // pivot ball
 pivot_d = 6;
-pivot_z = 5;
+pivot_z = 7;
 pivot_y = 8.5;
 
 // rear damper mount
@@ -84,7 +84,7 @@ rwp_z2 = rwp_z1+18;
 rearCradle();
 
 module rearCradle() {
-    color("red") bottomPlate(wide= 50);
+    bottomPlate(wide= 50); //color("red") 
     color("blue") bottomPlate();
     leftBulkhead();
     rightBulkhead();
@@ -116,7 +116,8 @@ module bottomPlate(wide= 36) {
                 translate([brl_x, brl_y, 0]) cylinder(d=8, h=bp_h);
             }
             hull() {
-                translate([bfl_x, bfl_y-1, 0]) cylinder(d=10, h=bp_h);
+                translate([bfl_x, bfl_y-1, 0]) cylinder(d=12, h=bp_h);
+                translate([-wide+5, bfl_y-1, 0]) cylinder(d=10, h=bp_h);
                 translate([brl_x, brl_y, 0]) cylinder(d=10, h=bp_h);
             }
             hull() {
@@ -160,7 +161,7 @@ module sidemount(sm_x = 36) {
     mount_l = 26; // Lenght of the total screw length
     mount_d = 6;
     tjockis_l = 10;
-    tjockis_d = 8;
+    tjockis_d = 5;
 
     difference() {
         union() {
@@ -306,8 +307,8 @@ module rightBulkhead() {
         allScrews();
         
         //bearing cut
-        translate([mm_x+1,ra_y,ra_z]) rotate([0,90,0]) cylinder(d=ra_b_d, h=mm_w);
-        translate([mm_x-1,ra_y,ra_z]) rotate([0,90,0]) cylinder(d=ra_bt_d, h=mm_w);
+        translate([mm_x+2,ra_y,ra_z]) rotate([0,90,0]) cylinder(d=ra_b_d, h=mm_w);
+        translate([mm_x-2,ra_y,ra_z]) rotate([0,90,0]) cylinder(d=ra_bt_d, h=mm_w);
         
         // motormount cut
         hull() {

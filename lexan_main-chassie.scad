@@ -59,7 +59,7 @@ s_wall_x = 9; // väggbredd
 s_plate_z = 3; // plattans tjocklek
 s_plate_y = 11; // hur långt bak plattan sticker ut
 s_plate_h_y = 6.1; // hur långt bak hålet ska va
-
+shock_mount = 36+3;
 // skruvar
 //$fs= 0.4; sätts i print.scad
 m3_d = C_M3_DIAMETER; // hål som en skruv inte ska fästa i
@@ -83,14 +83,15 @@ lb_z = batteri_z;
 // sidofästen
 sf_y = 62;//62;
 sf_x = 100;
-
+//translate([-0, -28, 0]) rotate([-90,0,0]) translate([-125, -150, 0])   import("ref/body.stl", convexity=10);
 
 translate([0,10,1]) rotate([0,0,90]) translate([0,-batteri_y/2,1]) %batteri();
 translate([-batteri_x/2,6,1]) %batteri();
 
 main_chassie_p();
 
-color("red")battery_plate_p();
+//color("red")battery_plate_p();
+legacy_body_battery_plate_p();
 receiver_plate_p();
 nose_plate_p();
 color("blue")side_spring_plate_p();
@@ -120,6 +121,7 @@ bp_z =1.5;
 body_post_x = 71;
 body_post_y = 52-pp1_y;
 body_post_z = 50-pp2_z;
+body_post_z_legacy = 45-pp2_z;
 
 module main_chassie_p() {
     difference() {
@@ -282,11 +284,21 @@ module batteri() {
 module battery_plate_p() {
     translate([0,0,pp2_z]) difference() {
         union() {
-            translate([0,pp1_y,0]) crossplate_bat(pp1_x, pp2_x, pp2_y-pp1_y, 3, 4);
-            translate([-10/2,36-8/2,0]) roundedcube(10,10,9,2);
+            translate([0,pp1_y,0]) crossplate_bat(pp1_x, pp2_x, pp2_y-pp1_y, 3, 4, body_post_z);
+            translate([-10/2,shock_mount-8/2,0]) roundedcube(10,10,9,2);
             
         }
-        translate([0,36,0])  cylinder(d=m3_d_s, h=9);
+        translate([0,shock_mount,0])  cylinder(d=m3_d_s, h=9);
+    }
+}
+module legacy_body_battery_plate_p() {
+    translate([0,0,pp2_z]) difference() {
+        union() {
+            translate([0,pp1_y,0]) crossplate_bat(pp1_x, pp2_x, pp2_y-pp1_y, 3, 4, body_post_z_legacy);
+            translate([-10/2,shock_mount-8/2,0]) roundedcube(10,10,9,2);
+            
+        }
+        translate([0,shock_mount,0])  cylinder(d=m3_d_s, h=9);
     }
 }
 
@@ -383,7 +395,7 @@ module crossplate(xdim1, xdim2, ,ydim ,zdim, rdim){
         translate([-xdim1,0,0]) cylinder(d=m3_d, h=zdim);
     }    
 }
-module crossplate_bat(xdim1, xdim2, ,ydim ,zdim, rdim){
+module crossplate_bat(xdim1, xdim2, ,ydim ,zdim, rdim, post_z){
     difference() {
         union() {
             hull() {
@@ -412,19 +424,19 @@ module crossplate_bat(xdim1, xdim2, ,ydim ,zdim, rdim){
             }
             
             hull() {
-                translate([-body_post_x/2,body_post_y,0]) cylinder(r=4, h=body_post_z);
+                translate([-body_post_x/2,body_post_y,0]) cylinder(r=4, h=post_z);
                 translate([-10,ydim-2,0]) cylinder(r=2, h=bp_z);
             }
             hull() {
-                translate([-body_post_x/2,body_post_y,0]) cylinder(r=4, h=body_post_z);
+                translate([-body_post_x/2,body_post_y,0]) cylinder(r=4, h=post_z);
                 translate([-35,5,0]) cylinder(r=2, h=bp_z);
             }
             hull() {
-                translate([body_post_x/2,body_post_y,0]) cylinder(r=4, h=body_post_z);
+                translate([body_post_x/2,body_post_y,0]) cylinder(r=4, h=post_z);
                 translate([10,ydim-2,0]) cylinder(r=2, h=bp_z);
             }
             hull() {
-                translate([body_post_x/2,body_post_y,0]) cylinder(r=4, h=body_post_z);
+                translate([body_post_x/2,body_post_y,0]) cylinder(r=4, h=post_z);
                 translate([35,5,0]) cylinder(r=2, h=bp_z);
             }
         }
@@ -438,8 +450,8 @@ module crossplate_bat(xdim1, xdim2, ,ydim ,zdim, rdim){
         translate([96/2-5,4+7+30,0]) cylinder(d=8, h=5);
         translate([-96/2+5,4+7+30,0]) cylinder(d=8, h=5);
         // hål i karossfästet
-        translate([body_post_x/2,body_post_y,0]) cylinder(r=3, h=body_post_z);
-        translate([-body_post_x/2,body_post_y,0]) cylinder(r=3, h=body_post_z);
+        translate([body_post_x/2,body_post_y,0]) cylinder(r=3, h=post_z);
+        translate([-body_post_x/2,body_post_y,0]) cylinder(r=3, h=post_z);
     }    
 }
 module crossplate_res(xdim1, xdim2, ,ydim ,zdim, rdim){
@@ -487,14 +499,14 @@ module roundedcube(xdim ,ydim ,zdim,rdim){
     }
 }  
 module sido_fasten() {
-    skruv_z = 5;
+    skruv_z = 7;
     bredd = 23.5;
     
     difference() {
         hull() {
             translate([0, -2, 0]) cube([bredd, 4, 1]);
             translate([0, -6, skruv_z-1]) cube([bredd, 12, 1]);
-            translate([0, -6, 8]) cube([bredd, 12, 1]);
+            translate([0, -6, 10]) cube([bredd, 12, 1]);
         }
         translate([0,0,skruv_z]) rotate([0,90,0]) flat_screw_tap(l=bredd);
     }
@@ -596,6 +608,6 @@ module vanster_faste() {
 }
 
 module bak_screw_cut() {
-    translate([0,10-0.01,5]) rotate([90,0,0]) flat_screw_tap(l = 10);
-    translate([0,bakre_wall+0.01,5]) rotate([90,0,0]) cylinder(d=C_M3_NUT, h=3, $fn=6);
+    translate([0,10-0.01,7]) rotate([90,0,0]) flat_screw_tap(l = 10);
+    translate([0,bakre_wall+0.01,7]) rotate([90,0,0]) cylinder(d=C_M3_NUT, h=3, $fn=6);
 }
