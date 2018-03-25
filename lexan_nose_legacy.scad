@@ -259,28 +259,7 @@ module arm_pin_p() {
         translate([-52, -25, 14]) cylinder(d=m3_d_s, h=36.5-14-4);
     }
 }
-module lower_arm() {
-    z_w = lower_arm_thickness;
-    z_z = 14;
-    
-    difference() {
-        union() {
-            hull() {
-                translate([-la1_x, -la1_y, z_z-z_w]) cylinder(d=10, h=z_w);
-                translate([-62, -25, z_z-z_w]) cylinder(d=10, h=z_w);
-            }
-            hull() {
-                translate([-la2_x, -la2_y, z_z-z_w]) cylinder(d=8, h=z_w);
-                translate([-52, -25, z_z-z_w]) cylinder(d=10, h=z_w);
-            }
-        }
-        lower_arm_mount_cut(dd=m3_d);
-        //translate([-62, -25, z_z-z_w]) cylinder(d=3.3, h=z_w);
-        translate([-63, -23, 0]) caster_rod();
-        translate([-52, -25, z_z-z_w]) cylinder(d=m3_d, h=z_w);
-        %arm_pin_p();
-    }
-}
+
 module lower_arm_mount() {
     translate([-la1_x,n_y-la1_y,0 ]) cylinder(d=8, h=n_z+11-3.5-1);
     translate([-la2_x,n_y-la2_y,0 ]) cylinder(d=10, h=n_z+11-3.5-1);
@@ -297,44 +276,7 @@ module lower_arm_mount_cut(dd=3) {
     
 }
 
-module upper_arm() {
-    z_w = 4;
-    z_z = 37;
-    
-    difference() {
-        union() {
-            difference() {
-                union() {
-                    hull() {
-                        translate([-ua1_x, -ua1_y, z_z-z_w]) cylinder(d=10, h=z_w);
-                        translate([-62, -25, z_z-z_w]) cylinder(d=10, h=z_w);
-                    }
-                    hull() {
-                        translate([-ua2_x, -ua2_y, z_z-z_w]) cylinder(d=8, h=z_w);
-                        translate([-52, -25, z_z-z_w]) cylinder(d=10, h=z_w);
-                    }
-                }
-                // styvnings grejer
-                hull() {
-                    translate([-ua1_x, -ua1_y, z_z-z_w/2]) cylinder(d=6, h=z_w);
-                    translate([-62, -25, z_z-z_w/2]) cylinder(d=6, h=z_w);
-                }
-            }
-            translate([-ua1_x, -ua1_y, z_z-z_w]) cylinder(d=10, h=z_w);
-            translate([-62, -25, z_z-z_w]) cylinder(d=10, h=z_w);
-            hull() {
-                translate([-ua1_x, -ua1_y, z_z-z_w]) cylinder(d=2, h=z_w);
-                translate([-62, -25, z_z-z_w]) cylinder(d=2, h=z_w);
-            }
-            
-        }
-        upper_arm_mount_cut(dd=m3_d);
-        //translate([-62, -25, z_z-z_w]) cylinder(d=3.3, h=z_w);
-        translate([-52, -25, z_z-z_w]) cylinder(d=m3_d, h=z_w);
-        
-        translate([-63, -23, 0]) caster_rod();
-    }
-}
+
 module upper_arm_mount() {
     translate([-ua1_x,n_y-ua1_y,0 ]) cylinder(d=8, h=36.5-4-2);
     difference() {
