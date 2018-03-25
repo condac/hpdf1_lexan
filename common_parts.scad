@@ -1,5 +1,5 @@
 include <tunable_constants.scad>;
-common_flat_screw_tap();
+//common_flat_screw_tap();
 module common_flat_screw_tap(l = 10, l2 = 0) {
     // l2 is amount of the screw that are bigger for sliding through the hole
     tap_z = 1.9;
@@ -35,4 +35,12 @@ module roundedcube(xdim ,ydim ,zdim,rdim){
 module cylinder_outer(height,radius,fn){
    fudge = 1/cos(180/fn);
    cylinder(h=height,r=radius*fudge,$fn=fn);
+}
+
+indicator_dots(2);
+
+module indicator_dots(valueIn) {
+    for (a =[0:1:valueIn-1]) {
+        translate([a*3,0,0]) cube([2,2,1]);
+    }
 }

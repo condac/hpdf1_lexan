@@ -50,6 +50,7 @@ ua1_y = 32;
 ua2_x = 16;
 ua2_y = 83;
 
+arm_pin_x = 50;
 lower_arm_thickness = 3.5;
 
 //plattan
@@ -104,6 +105,7 @@ translate([0,115,30]) upper_arm_plate_p();
 // ###################################################
 color("yellow") %mirror([1,0,0]) translate([0,240,0]) upper_arm();
 color("yellow") %mirror([1,0,0]) translate([0,240,0]) lower_arm();
+color("yellow") %mirror([1,0,0]) translate([0,240,0]) arm_pin_p();
 
 
 // visual aids
@@ -234,10 +236,11 @@ module upper_arm_plate_p() {
 
 module arm_pin_p() {
     difference() {
-        translate([-52, -25, 14]) cylinder(d=m3_d_s+0.8*4, h=36.5-14-4);
-        translate([-52, -25, 14]) cylinder(d=m3_d_s, h=36.5-14-4);
+        translate([-arm_pin_x, -25, 14]) cylinder(d=m3_d_s+0.8*4, h=36.5-14-4);
+        translate([-arm_pin_x, -25, 14]) cylinder(d=m3_d_s, h=36.5-14-4);
     }
 }
+
 module lower_arm() {
     z_w = lower_arm_thickness;
     z_z = 14;
@@ -250,14 +253,17 @@ module lower_arm() {
             }
             hull() {
                 translate([-la2_x, -la2_y, z_z-z_w]) cylinder(d=8, h=z_w);
-                translate([-52, -25, z_z-z_w]) cylinder(d=10, h=z_w);
+                translate([-arm_pin_x, -25, z_z-z_w]) cylinder(d=10, h=z_w);
             }
+            
         }
         lower_arm_mount_cut(dd=m3_d);
         //translate([-62, -25, z_z-z_w]) cylinder(d=3.3, h=z_w);
         translate([-63, -23, 0]) caster_rod();
-        translate([-52, -25, z_z-z_w]) cylinder(d=m3_d, h=z_w);
-        %arm_pin_p();
+        translate([-arm_pin_x, -25, z_z-z_w]) cylinder(d=m3_d, h=z_w); // hole for arm pin
+        
+        translate([8,-10,3])translate([-arm_pin_x, -25, z_z-z_w]) rotate([0,0,-49]) indicator_dots(S_CASTER);
+        translate([-7,-7,3])translate([-ua1_x, -ua1_y, z_z-z_w]) rotate([0,0,162])  indicator_dots(S_CAMBER);
     }
 }
 module lower_arm_mount() {
@@ -290,7 +296,7 @@ module upper_arm() {
                     }
                     hull() {
                         translate([-ua2_x, -ua2_y, z_z-z_w]) cylinder(d=8, h=z_w);
-                        translate([-52, -25, z_z-z_w]) cylinder(d=10, h=z_w);
+                        translate([-arm_pin_x, -25, z_z-z_w]) cylinder(d=10, h=z_w);
                     }
                 }
                 // styvnings grejer
@@ -298,6 +304,7 @@ module upper_arm() {
                     translate([-ua1_x, -ua1_y, z_z-z_w/2]) cylinder(d=6, h=z_w);
                     translate([-62, -25, z_z-z_w/2]) cylinder(d=6, h=z_w);
                 }
+                translate([5,-10,3.5])translate([-arm_pin_x, -25, z_z-z_w]) rotate([0,0,-59]) indicator_dots(S_CASTER);
             }
             translate([-ua1_x, -ua1_y, z_z-z_w]) cylinder(d=10, h=z_w);
             translate([-62, -25, z_z-z_w]) cylinder(d=10, h=z_w);
@@ -306,10 +313,12 @@ module upper_arm() {
                 translate([-62, -25, z_z-z_w]) cylinder(d=2, h=z_w);
             }
             
+            translate([-7,4,1.6])translate([-ua1_x, -ua1_y, z_z-z_w]) rotate([0,0,172]) indicator_dots(S_CAMBER);
+            
         }
         upper_arm_mount_cut(dd=m3_d);
         //translate([-62, -25, z_z-z_w]) cylinder(d=3.3, h=z_w);
-        translate([-52, -25, z_z-z_w]) cylinder(d=m3_d, h=z_w);
+        translate([-arm_pin_x, -25, z_z-z_w]) cylinder(d=m3_d, h=z_w);
         
         translate([-63, -23, 0]) caster_rod();
     }
