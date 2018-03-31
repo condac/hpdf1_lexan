@@ -6,7 +6,7 @@ This is my custom version of the HPD F1 by Kent Asplund. Ask questions and join 
 
 ## Material
 
-All parts are designed to be printed in 100% infill. Use 2mm Perimiters and 0.15-0.2mm layer height as a start. 
+All parts are designed to be printed in 100% infill. Use 2mm Perimiters and 0.15-0.2mm layer height as a start. Total material used is about 260g.
 
 You can print every part in PLA and it will work suprisingly well. If you are printing this for the first time I recommend you print it in PLA or what ever your printer can handle best at first, and when something break you can print it in nylon.   
 
