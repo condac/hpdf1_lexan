@@ -135,6 +135,11 @@ module cradle_wingPlate() {
     rotate([90,0,0])wingPlate();
     
 }
+//cradle_damperMount();
+module cradle_damperMount() {
+    rearDamperMount();
+    
+}
 //frontwing();
 module frontwing() {
     rotate([180,0,0])frontwing_p();

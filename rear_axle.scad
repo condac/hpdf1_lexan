@@ -240,7 +240,7 @@ module wheel() {
     
     difference() {
         translate([0,0,-_offset]) cylinder(d=dd, h=hh);
-        translate([-100,0,-100]) cube(200);
+        //translate([-100,0,-100]) cube(200);
         translate([0,0,1])cylinder(d=12, h=50);
         translate([0,0,0]) rotate([-180,0,0])cylinder(d=wheel_hex+0.5, h=50, $fn=6);
     }

@@ -90,6 +90,7 @@ module rearCradle() {
     rightBulkhead();
     pivotClamp();
     wingPlate();
+    rearDamperMount();
 }
 
 module bottomPlate(wide= 36) {
@@ -341,8 +342,31 @@ module rightBulkhead() {
 }
 
 module rearDamperMount() {
+    thick = 3.5;
     // Use HPD version
-    
+    difference() {
+        union() {
+            
+            hull() {
+                translate([rdm_xr, rdm_y, rdm_z]) cylinder(d=8, h=thick);
+                translate([0, rdm_y-1, rdm_z]) cylinder(d=8, h=thick);
+            }
+            hull() {
+                translate([0, rdm_y-1, rdm_z]) cylinder(d=8, h=thick);
+                translate([-20, rdm_y+10, rdm_z]) cylinder(d=8, h=thick);
+            }
+            hull() {
+                translate([-20, rdm_y+10, rdm_z]) cylinder(d=8, h=thick);
+                translate([-30, rdm_y+10, rdm_z]) cylinder(d=8, h=thick);
+            }
+            hull() {
+                translate([-30, rdm_y+10, rdm_z]) cylinder(d=8, h=thick);
+                translate([rdm_xl, rdm_y, rdm_z]) cylinder(d=8, h=thick);
+            }
+            translate([0, rdm_y-1, rdm_z]) cylinder(d=8, h=thick+4);
+        }
+        allScrews();
+    }
 }
 
 module pivotClamp() {
@@ -409,6 +433,12 @@ module allScrews() {
     // rear damper mount
     translate([rdm_xr, rdm_y, rdm_z]) rotate([180,0,0]) common_flat_screw_tap(l = 13);
     translate([rdm_xl, rdm_y, rdm_z]) rotate([180,0,0]) common_flat_screw_tap(l = 13);
+    translate([rdm_xr, rdm_y, rdm_z+4]) rotate([180,0,0]) common_button_screw_tap(l = 13, l2=4);
+    translate([rdm_xl, rdm_y, rdm_z+4]) rotate([180,0,0]) common_button_screw_tap(l = 13, l2=4);
+    translate([0, rdm_y-1, rdm_z+4+4]) rotate([180,0,0]) common_button_screw_tap(l = 13, l2=4);
+    translate([-20, rdm_y+10, rdm_z+4]) rotate([180,0,0]) common_button_screw_tap(l = 13, l2=4);
+    translate([-25, rdm_y+10, rdm_z+4]) rotate([180,0,0]) common_button_screw_tap(l = 13, l2=4);
+    translate([-30, rdm_y+10, rdm_z+4]) rotate([180,0,0]) common_button_screw_tap(l = 13, l2=4);
     
     // rear wing mount
     translate([rwp_xr, rwp_y, rwp_z1]) rotate([-90,0,0]) common_button_screw_tap(l = 12, l2=3);
