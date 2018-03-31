@@ -1,17 +1,24 @@
-# Work in progress
-
-Still very much work in progress. Car is only tested on track a few times. But it is good enough to keep up with brand named cars if you are a good driver. 
-
 # HPD F1 Lexan version
 Custom version of the HPD F1 to use lexan body. 
 
 ## About
-This is my custom version of the HPD F1 by Kent Asplund. It still uses the rear parts and wings from his project. Join discussion on Google+ https://plus.google.com/communities/117625327650679845498 
+This is my custom version of the HPD F1 by Kent Asplund. Ask questions and join discussion about these printed cars on Google+ https://plus.google.com/communities/117625327650679845498 You can also open an issue here on github if you have questions about the cars design or build process. 
 
 ## Material
-This version is focused to be printed in Nylon 910 Alloy. The material is soft and I will try to make it as rigid as possible with the material properties that the nylon has. The 910 Alloy is stiff for a nylon material but still very hard to break. 
 
-There should be no problem printing it with PLA or other material, but it might break more easy. 
+All parts are designed to be printed in 100% infill. Use 2mm Perimiters and 0.15-0.2mm layer height as a start. 
+
+You can print every part in PLA and it will work suprisingly well. If you are printing this for the first time I recommend you print it in PLA or what ever your printer can handle best at first, and when something break you can print it in nylon.   
+
+My race car have everything in PLA apart from some nylon changes I have made after some parts broke. There are 2 categories of nylon you want to use, a soft and flexible, and a hard. Where hard is still very soft compared to PLA. I have used Bridge nylon for flexible and 910 Alloy for harder. Here are my current changes and why:
+
+* front_wing.stl & rear_wing.stl softer nylon for flex and impact resistance. (No rear wing in bridge nylon have been destroyed yet!!) 
+* side_stab2.stl Soft or hard nylon for maximum impact resistance. I used Bridge here because it was in the printer at the time. 
+* cradle_bottomPlate_wide.stl Soft or hard nylon for maximum impact resistance. This part takes alot of beating when the rear tires hit something. I used Bridge here because it was in the printer at the time and it worked well even if its soft.
+* cradle_rightBulkhead.stl Hard nylon for high temperature. The motor get hot if you have a grippy surface like indoor carpets. Outdoor on normal asfalt or low grip racetracks there is no problem using PLA here. I have used nylon 910 and it flexes abit under the weight of the enginge but it seems OK. 
+
+All parts can be made in nylon if you want maximum strength. The car is designed to not be to wobbly with the "hard" but still soft nylon material. I made all designs to be nylon printer friendly and the target design was to print everything in nylon. But after printing the prototype in PLA and crashing it I noticed that the new design was very good even with PLA so I have only changed a few parts to Nylon after they have breaked. 
+
 
 ## Non-printed parts
 * Low-profile servo
