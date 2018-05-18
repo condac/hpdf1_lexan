@@ -244,12 +244,13 @@ module arm_pin_p() {
 module lower_arm() {
     z_w = lower_arm_thickness;
     z_z = 14;
+    caster_compensated_y = -23 - S_CASTER*0.2;
     
     difference() {
         union() {
             hull() {
                 translate([-la1_x, -la1_y, z_z-z_w]) cylinder(d=10, h=z_w);
-                translate([-62, -25, z_z-z_w]) cylinder(d=10, h=z_w);
+                translate([-62, caster_compensated_y, z_z-z_w]) cylinder(d=10, h=z_w);
             }
             hull() {
                 translate([-la2_x, -la2_y, z_z-z_w]) cylinder(d=8, h=z_w);
@@ -285,6 +286,7 @@ module lower_arm_mount_cut(dd=3) {
 module upper_arm() {
     z_w = 4;
     z_z = 36.5;
+    caster_compensated_y = -23 - S_CASTER*0.65;
     
     difference() {
         union() {
@@ -292,7 +294,7 @@ module upper_arm() {
                 union() {
                     hull() {
                         translate([-ua1_x, -ua1_y, z_z-z_w]) cylinder(d=10, h=z_w);
-                        translate([-62, -25, z_z-z_w]) cylinder(d=10, h=z_w);
+                        translate([-62, caster_compensated_y, z_z-z_w]) cylinder(d=10, h=z_w);
                     }
                     hull() {
                         translate([-ua2_x, -ua2_y, z_z-z_w]) cylinder(d=8, h=z_w);
@@ -302,15 +304,15 @@ module upper_arm() {
                 // styvnings grejer
                 hull() {
                     translate([-ua1_x, -ua1_y, z_z-z_w/2]) cylinder(d=6, h=z_w);
-                    translate([-62, -25, z_z-z_w/2]) cylinder(d=6, h=z_w);
+                    translate([-62, caster_compensated_y, z_z-z_w/2]) cylinder(d=6, h=z_w);
                 }
                 translate([5,-10,3.5])translate([-arm_pin_x, -25, z_z-z_w]) rotate([0,0,-59]) indicator_dots(S_CASTER);
             }
             translate([-ua1_x, -ua1_y, z_z-z_w]) cylinder(d=10, h=z_w);
-            translate([-62, -25, z_z-z_w]) cylinder(d=10, h=z_w);
+            translate([-62, caster_compensated_y, z_z-z_w]) cylinder(d=10, h=z_w);
             hull() {
                 translate([-ua1_x, -ua1_y, z_z-z_w]) cylinder(d=2, h=z_w);
-                translate([-62, -25, z_z-z_w]) cylinder(d=2, h=z_w);
+                translate([-62, caster_compensated_y, z_z-z_w]) cylinder(d=2, h=z_w);
             }
             
             translate([-7,4,1.6])translate([-ua1_x, -ua1_y, z_z-z_w]) rotate([0,0,172]) indicator_dots(S_CAMBER);

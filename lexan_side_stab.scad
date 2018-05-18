@@ -5,16 +5,16 @@ use <lexan_nose.scad>
 
 %translate([-115, -67, -93])  rotate([0,-90,-90]) import("ref/Cradle.stl", convexity=10);
 
-color("green") side_spring_plate_p();
+color("green") % side_spring_plate_p();
 
 
-color("lightblue")main_chassie_p();
+color("lightblue") %main_chassie_p();
 
-battery_plate_p();
+%battery_plate_p();
 
 
-translate([0,0,5]) side_stab_p();
-side_stab2_p();
+//translate([0,0,5]) side_stab_p();
+translate([-50-55,0,5]) side_stab2_p();
 
 module side_stab_p() {
     
@@ -49,23 +49,22 @@ module side_stab2_p() {
     s_x2 = 53;
     s_z = 7;
     s_w = 2.5;
-    
+    s_d1 = 10;
+    s_d2 = 6;
     
     difference() {
         union() {
             hull() {
-                translate([s_x1,-4,0])rotate([0,90,0]) cylinder(d=10, h=s_w);
-                translate([s_x1,-4+10,0])rotate([0,90,0]) cylinder(d=6, h=s_w);
+                translate([s_x1,-4,0])rotate([0,90,0]) cylinder(d=s_d1, h=s_w);
+                translate([s_x1,-4+10,0])rotate([0,90,0]) cylinder(d=s_d2, h=s_w);
             }
             hull() {
-                translate([s_x2,63,0])rotate([0,90,0]) cylinder(d=10, h=s_w);
-                translate([s_x2,63-10,0])rotate([0,90,0]) cylinder(d=6, h=s_w);
+                translate([s_x2,63,0])rotate([0,90,0]) cylinder(d=s_d1, h=s_w);
+                translate([s_x2,63-10,0])rotate([0,90,0]) cylinder(d=s_d2, h=s_w);
             }
-            translate([s_x1,-8,-s_z/2]) cube([s_w,10,s_z]);
-            //translate([s_x1,0,-s_z/2]) cube([s_x2-s_x1,5,s_z]);
             hull() {
-                translate([s_x2,  61 , -s_z/2]) cube([s_w,6,s_z]);
-                translate([s_x2,  0 , -s_z/2]) cube([s_w,10,s_z]);
+                translate([s_x1,-4+10,0])rotate([0,90,0]) cylinder(d=s_d2, h=s_w);       
+                translate([s_x2,63-10,0])rotate([0,90,0]) cylinder(d=s_d2, h=s_w);
             }
         }
         translate([s_x1-1,-4,0])rotate([0,90,0]) cylinder(d=3, h=10);
