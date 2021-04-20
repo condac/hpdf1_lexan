@@ -17,7 +17,7 @@ use <MCAD/involute_gears.scad>
 target_width = 188;
 
 threaded_rod = target_width-21;
-axle_rod_length = target_width-26-26-4.5-9-2-1; // Length of the carbonfiberrod or other axle material. 
+axle_rod_length = target_width-26-26-4.5-6-2-1; // Length of the carbonfiberrod or other axle material. 
 echo("Carbon axle lenght to cut:",axle_rod_length);
 echo("M4 threaded rod lenght to cut:",threaded_rod);
 axle_d = C_8MM_TIGHT;
@@ -58,7 +58,7 @@ ra_y = -53;
 mm_x = 22; // Cradle inner offset from car center UPDATE FROM CRADLE DRAwING IF IT HAS CHANGED
 cradle_wall = 7; // Cradle thickness on motormount + space for washer UPDATE FROM CRADLE DRAwING IF IT HAS CHANGED
 
-gear_center = mm_x+14.5; // mm_x + 13
+gear_center = mm_x+14.5+3.5; // mm_x + 13
 
 // Printed gear parametsers
 gear_pitch = 180;
@@ -196,7 +196,7 @@ module outdrive_p() {
         union() {
             translate([0,0,ball_d/2+drive_clear]) cylinder(d2=plate_d1+plate_wall, d1= plate_d1+0.8, h= cone_end);
             translate([0,0,ball_d/2+drive_clear+cone_end]) cylinder(d=plate_d1+plate_wall, h= plate_h+seal_h+2-cone_end);
-            translate([0,0,ball_d/2+drive_clear+plate_h+seal_h+2]) cylinder(d1=plate_d1+plate_wall, d2= wheel_hex-2 , h= 12);
+            translate([0,0,ball_d/2+drive_clear+plate_h+seal_h+2]) cylinder(d1=plate_d1+plate_wall, d2= wheel_hex-2 , h= 12-3.5);
             translate([0,0,ball_d/2+drive_clear+plate_h+seal_h+2+5]) cylinder(d=wheel_hex, h=hh - (plate_h+seal_h+2+5) , $fn=6);
         }
         
@@ -250,20 +250,22 @@ module wheel() {
 module left_wheelmount_p() {
     hh = 22;
     wall = 2; //wall between nut and wheelrim
-    nut_h = 9.5/2;
+    nut_h = 6.5/2;
     wheel_hex_h = 14;
     
     shim = 2;
+    end_bearing_d = 12;
     
     difference() {
         union() {
             translate([0,0,-wheel_hex_h]) rotate([0,0,0])cylinder(d=wheel_hex, h=wheel_hex_h-1, $fn=6);
             translate([0,0,-1]) rotate([0,0,0])cylinder(d1=wheel_hex, d2=wheel_hex-2, h=1, $fn=6);
             translate([0,0,-hh]) rotate([0,0,0])cylinder(d=wheel_hex, h=hh-wheel_hex_h );
-            translate([0,0,-hh-shim]) rotate([0,0,0])cylinder(d2=wheel_hex, d1=10, h=shim );
+            translate([0,0,-hh-shim]) rotate([0,0,0])cylinder(d2=wheel_hex, d1=end_bearing_d, h=shim );
         }
         translate([0,0,-nut_h-wall-1])cylinder(d=C_M4_NUT, h=nut_h+1, $fn=6);
         translate([0,0,-hh-wall-nut_h]) cylinder(d=C_8MM_FIT, h=hh);
+        translate([0,0,-hh-wall-nut_h]) cylinder(d=C_8MM_FIT+2.1, h=6);
         
         // M4 cut
         translate([0,0,-hh]) cylinder(d=C_M4_DIAMETER, h=hh+2);
@@ -292,11 +294,11 @@ module gear_adapter_p() {
 }
 translate([0,0,-20])spur_gear_p();
 
-module spur_gear_p() {
+module spur_gear_p(tt = 40) {
     thickness = 2.5;
     difference() {
        translate([0,0,0]) gear (
-            number_of_teeth=40, 
+            number_of_teeth=tt, 
             circular_pitch=gear_pitch, 
             pressure_angle = 20,
             gear_thickness = 6,        
@@ -332,7 +334,7 @@ module pinion_gear_p(tt = 18) {
             translate([0,0,6])cylinder(d=15, h=13-6);
             cylinder(d=10, h=13+5);
             
-            translate([0,0,7])cylinder(d=16, h=5);
+            translate([0,0,7])cylinder(d=18, h=5);
         }
        
         //translate([0,0,-14]) import("ref/Spur_Gear.stl", convexity=10);

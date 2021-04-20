@@ -4,8 +4,8 @@ use <common_parts.scad>
 include <tunable_constants.scad>;
 $fs=0.1;
 
-caster = 4;
-camber = 2;
+caster = S_CASTER;
+camber = S_CAMBER;
 
 kingpin_d = C_KINGPIN_LOOSE; //3.5;
 

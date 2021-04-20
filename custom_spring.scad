@@ -7,10 +7,11 @@ use <lexan_side_stab.scad>
 use <caster_hub.scad>
 use <wingadapter.scad>
 use <common_parts.scad>
+use <hpdf1_rear_cradle_universal.scad>
 use <ref/spring.scad>
 
 
-spring_length = 55;
+spring_length = 50;
 spring_h = 5;
 spring_wall = 0.8;
 spring_ring_d= 20;
@@ -60,8 +61,8 @@ module torus(dd=1, wall=1, hh=1) {
 module visualHelp() {
 
 
-%translate([92.5, 80, 35.5])  rotate([0,0,180]) import("ref/RearDamperMountCarbon.stl", convexity=10);
-
+//%translate([92.5, 80, 35.5])  rotate([0,0,180]) import("ref/RearDamperMountCarbon.stl", convexity=10);
+rearCradle();
 color("green") side_spring_plate_p();
 
 //nose_plate_p();

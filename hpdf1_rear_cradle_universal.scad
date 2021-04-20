@@ -57,11 +57,11 @@ lb_x = -43;
 // Sidemounts
 //sm_x = 36; // change this to 36 for original narrow HPDF1. 50 for wider lexan version
 sm_y = -4;
-sm_z = 5;
+sm_z = 7;
 
 // pivot ball
 pivot_d = 6;
-pivot_z = 5;
+pivot_z = 7;
 pivot_y = 8.5;
 
 // rear damper mount
@@ -90,6 +90,7 @@ module rearCradle() {
     rightBulkhead();
     pivotClamp();
     wingPlate();
+    rearDamperMount();
 }
 
 module bottomPlate(wide= 36) {
@@ -161,7 +162,7 @@ module sidemount(sm_x = 36) {
     mount_l = 26; // Lenght of the total screw length
     mount_d = 6;
     tjockis_l = 10;
-    tjockis_d = 8;
+    tjockis_d = 5;
 
     difference() {
         union() {
@@ -307,8 +308,8 @@ module rightBulkhead() {
         allScrews();
         
         //bearing cut
-        translate([mm_x+1,ra_y,ra_z]) rotate([0,90,0]) cylinder(d=ra_b_d, h=mm_w);
-        translate([mm_x-1,ra_y,ra_z]) rotate([0,90,0]) cylinder(d=ra_bt_d, h=mm_w);
+        translate([mm_x+2,ra_y,ra_z]) rotate([0,90,0]) cylinder(d=ra_b_d, h=mm_w);
+        translate([mm_x-2,ra_y,ra_z]) rotate([0,90,0]) cylinder(d=ra_bt_d, h=mm_w);
         
         // motormount cut
         hull() {
@@ -341,8 +342,31 @@ module rightBulkhead() {
 }
 
 module rearDamperMount() {
+    thick = 3.5;
     // Use HPD version
-    
+    difference() {
+        union() {
+            
+            hull() {
+                translate([rdm_xr, rdm_y, rdm_z]) cylinder(d=8, h=thick);
+                translate([0, rdm_y-1, rdm_z]) cylinder(d=8, h=thick);
+            }
+            hull() {
+                translate([0, rdm_y-1, rdm_z]) cylinder(d=8, h=thick);
+                translate([-20, rdm_y+10, rdm_z]) cylinder(d=8, h=thick);
+            }
+            hull() {
+                translate([-20, rdm_y+10, rdm_z]) cylinder(d=8, h=thick);
+                translate([-30, rdm_y+10, rdm_z]) cylinder(d=8, h=thick);
+            }
+            hull() {
+                translate([-30, rdm_y+10, rdm_z]) cylinder(d=8, h=thick);
+                translate([rdm_xl, rdm_y, rdm_z]) cylinder(d=8, h=thick);
+            }
+            translate([0, rdm_y-1, rdm_z]) cylinder(d=8, h=thick+4);
+        }
+        allScrews();
+    }
 }
 
 module pivotClamp() {
@@ -409,6 +433,12 @@ module allScrews() {
     // rear damper mount
     translate([rdm_xr, rdm_y, rdm_z]) rotate([180,0,0]) common_flat_screw_tap(l = 13);
     translate([rdm_xl, rdm_y, rdm_z]) rotate([180,0,0]) common_flat_screw_tap(l = 13);
+    translate([rdm_xr, rdm_y, rdm_z+4]) rotate([180,0,0]) common_button_screw_tap(l = 13, l2=4);
+    translate([rdm_xl, rdm_y, rdm_z+4]) rotate([180,0,0]) common_button_screw_tap(l = 13, l2=4);
+    translate([0, rdm_y-1, rdm_z+4+4]) rotate([180,0,0]) common_button_screw_tap(l = 13, l2=4);
+    translate([-20, rdm_y+10, rdm_z+4]) rotate([180,0,0]) common_button_screw_tap(l = 13, l2=4);
+    translate([-25, rdm_y+10, rdm_z+4]) rotate([180,0,0]) common_button_screw_tap(l = 13, l2=4);
+    translate([-30, rdm_y+10, rdm_z+4]) rotate([180,0,0]) common_button_screw_tap(l = 13, l2=4);
     
     // rear wing mount
     translate([rwp_xr, rwp_y, rwp_z1]) rotate([-90,0,0]) common_button_screw_tap(l = 12, l2=3);
