@@ -6,7 +6,9 @@ all: stl main_chassie nose_plate side_spring_plate battery_plate receiver_plate 
 	
 cradle: cradle_damperMount cradle_bottomPlate cradle_leftBulkhead cradle_rightBulkhead cradle_wingPlate cradle_bottomPlate_wide
 
+
 gears: spur_gear_40t spur_gear_39t spur_gear_38t pinion_gear_19t pinion_gear_18t pinion_gear_17t pinion_gear_16t pinion_gear_15t 
+
 
 legacy: legacy_nose_body_mount_plate legacy_body_mount_plate legacy_nose front_body_broken legacy_body_battery_plate front_mount
 

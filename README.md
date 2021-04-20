@@ -75,3 +75,6 @@ Having parts in different files and working with multiple OpenSCAD programs open
 print.scad is used to print parts in the right rotation for printing. 
 
 hpdf1_lexan.scad is a preview to see all parts in the right places
+
+## Donations
+Feel free to make any donations on my patreon page https://www.patreon.com/condac or with paypal https://www.paypal.me/condac
