@@ -225,9 +225,21 @@ module wingelement() {
     translate([0,-20,0])  rotate([0,0,180]) mirror([1,0,0]) rotate([90,0,0]) wingelement_p();
 }
 
-module spur_gear() {
+module spur_gear_40t() {
     
-    spur_gear_p();
+    spur_gear_p(tt=40);
+}
+module spur_gear_39t() {
+    
+    spur_gear_p(tt=39);
+}
+module spur_gear_38t() {
+    
+    spur_gear_p(tt=38);
+}
+module pinion_gear_19t() {
+    
+    pinion_gear_p(tt=19);
 }
 module pinion_gear_18t() {
     
