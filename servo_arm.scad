@@ -62,9 +62,18 @@ module servo_arm_p() {
         }
         allScrews();
 
-        translate([0, 0, 0]) cylinder(d=adapter_d2, h=arm_h);
-        translate([0, 0, 0]) cylinder(d=adapter_d2+1, h=1);
-        translate([0, 0, 0]) cylinder(d=adapter_d2+1.5, h=0.3);
+        hull() {
+            translate([0, 0, 0]) cylinder(d=adapter_d2, h=arm_h);
+            translate([0, -100, 0]) cylinder(d=adapter_d2, h=arm_h);
+        }
+        hull() {
+            translate([0, 0, 0]) cylinder(d=adapter_d2+1, h=1);
+            translate([0, -100, 0]) cylinder(d=adapter_d2+1, h=1);
+        }
+        hull() {
+            translate([0, 0, 0]) cylinder(d=adapter_d2+1.5, h=0.3);
+            translate([0, -100, 0]) cylinder(d=adapter_d2+1.5, h=0.3);
+        }
 
     }
 }

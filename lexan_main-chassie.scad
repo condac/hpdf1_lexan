@@ -25,7 +25,7 @@ long_extra2 = 0; // set to 0 if short 18 if long battery
 batteri_x = 48;
 batteri_y = 96.5+long_extra;
 batteri_z = 26;
-b_offset_z = 0.5; // höjden batteriet ligger på, det som blir basens tjocklek i botten
+b_offset_z = 1; // höjden batteriet ligger på, det som blir basens tjocklek i botten
 
 if (long) {
     echo("long");
@@ -176,7 +176,7 @@ module main_chassie_p() {
             
         }
         translate([batteri_y/2, bakre_wall+4, b_offset_z]) rotate([0,0,90]) batteri();
-        translate([-batteri_x/2, bakre_wall, b_offset_z]) rotate([0,0,0]) batteri();
+        translate([-batteri_x/2, bakre_wall, 2]) rotate([0,0,0]) batteri();
         
         
         // för att kunna ta ut batteriet på sidan
@@ -324,7 +324,7 @@ module body_posts_p() {
 module receiver_plate_p() {
     translate([0,0,pp3_z]) difference() {
         union() {
-            translate([0,pp2_y,0]) crossplate_res(pp2_x, pp3_x, pp3_y-pp2_y+1, 2.5, 4);
+            translate([0,pp2_y,0]) crossplate_res(pp2_x, pp3_x, pp3_y-pp2_y, 2.5, 4);
             
         }
         

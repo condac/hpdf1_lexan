@@ -119,7 +119,7 @@ translate([0,240-42-5-13.5,34-3]) %cylinder(r=5, h = 3);
 
 n_y = 115;
 n_x1 = 28; // x fram
-n_x2 = 37; // x bak
+n_x2 = 39; // x bak
 n_z = 4;
 
 // vingfästen
@@ -153,8 +153,8 @@ module nose_p() {
         }
         
         // skruvar fäste main chassie
-        translate([ 15, 8, 0]) rotate([0,0,0]) common_flat_screw_tap();
-        translate([-15, 8, 0]) rotate([0,0,0]) common_flat_screw_tap();
+        translate([ 15, 8, 0]) rotate([0,0,0]) common_flat_screw_tap(l = 13, l2=n_z);
+        translate([-15, 8, 0]) rotate([0,0,0]) common_flat_screw_tap(l = 13, l2=n_z);
         
         //utsågning för skruvar i framfäste
         translate([ 15, 8, 0]) cylinder(d=m3_d, h= 5);
@@ -302,11 +302,12 @@ module upper_arm() {
                     }
                 }
                 // styvnings grejer
-                hull() {
+                %hull() {
                     translate([-ua1_x, -ua1_y, z_z-z_w/2]) cylinder(d=6, h=z_w);
                     translate([-62, caster_compensated_y, z_z-z_w/2]) cylinder(d=6, h=z_w);
                 }
                 translate([5,-10,3.5])translate([-arm_pin_x, -25, z_z-z_w]) rotate([0,0,-59]) indicator_dots(S_CASTER);
+                translate([-7,4,3.5])translate([-ua1_x, -ua1_y, z_z-z_w]) rotate([0,0,172]) indicator_dots(S_CAMBER);
             }
             translate([-ua1_x, -ua1_y, z_z-z_w]) cylinder(d=10, h=z_w);
             translate([-62, caster_compensated_y, z_z-z_w]) cylinder(d=10, h=z_w);
@@ -315,7 +316,7 @@ module upper_arm() {
                 translate([-62, caster_compensated_y, z_z-z_w]) cylinder(d=2, h=z_w);
             }
             
-            translate([-7,4,1.6])translate([-ua1_x, -ua1_y, z_z-z_w]) rotate([0,0,172]) indicator_dots(S_CAMBER);
+            
             
         }
         upper_arm_mount_cut(dd=m3_d);
@@ -343,7 +344,7 @@ module upper_arm_mount_cut(dd=3) {
 
 
 module servo_mount() {
-    s_x = 24;
+    s_x = 26;
     s_y = 56;
     s_z = 18;
     difference() {
@@ -351,7 +352,7 @@ module servo_mount() {
             translate([-s_x/2, -s_y/2, 0]) roundedcube(s_x, s_y, s_z, 3);
         }
         
-        translate([-s_x/2+1, -42/2, 0]) roundedcube(22, 42, s_z, 0.5);
+        translate([-22/2, -42/2, 0]) roundedcube(22, 42, s_z, 0.5);
         
         translate([5, 50/2,0])  cylinder(d=m3_d_s, h=s_z);
         translate([-5, -50/2,0])  cylinder(d=m3_d_s, h=s_z);

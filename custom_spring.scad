@@ -11,7 +11,7 @@ use <hpdf1_rear_cradle_universal.scad>
 use <ref/spring.scad>
 
 
-spring_length = 50;
+spring_length = 55;
 spring_h = 5;
 spring_wall = 0.8;
 spring_ring_d= 20;
