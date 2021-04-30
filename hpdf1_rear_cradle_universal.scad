@@ -85,7 +85,7 @@ rearCradle();
 
 module rearCradle() {
     bottomPlate(wide= 50); //color("red") 
-    color("blue") bottomPlate();
+    //color("blue") bottomPlate();
     leftBulkhead();
     rightBulkhead();
     pivotClamp();
@@ -156,8 +156,23 @@ module bottomPlate(wide= 36) {
         mount_l = 20;
         translate([wide-mount_l,sm_y,sm_z]) rotate([0,90,0]) cylinder(d=C_M3_DIAMETER_THREAD, h=mount_l);
         allScrews();
+        translate([mm_x,mm_max,mm_motor_z]) rotate([0,-90,0]) cylinder(d=mm_motor_d, h=mm_motor_length+2);
     }
 }
+
+module pivotClamp() {
+        color("red") translate([0,0,40]) difference() {
+        union() {
+                //Pivot area
+            translate([-10,-1-10+2,2 ]) cube([20, 8, pivot_z-2]);
+        }
+        //Pivot area
+        translate([0, 0, pivot_z]) rotate([90,0,0]) cylinder(d=pivot_d, h=pivot_y);
+        translate([0, -pivot_y, pivot_z]) rotate([90,0,0]) cylinder(d=pivot_d+2, h=pivot_y);
+        allScrews();
+    }
+}
+
 module sidemount(sm_x = 36) {
     mount_l = 26; // Lenght of the total screw length
     mount_d = 6;
@@ -369,9 +384,7 @@ module rearDamperMount() {
     }
 }
 
-module pivotClamp() {
-    
-}
+
 
 module wingPlate() {
     zz=wingPlate_z;
@@ -451,7 +464,7 @@ module allScrews() {
 }
 
 
-                              %visualHelp();
+%visualHelp();
 module visualHelp() {
     translate([mm_x,mm_max,mm_motor_z]) rotate([0,-90,0]) cylinder(d=mm_motor_d, h=mm_motor_length);
 

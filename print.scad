@@ -14,6 +14,9 @@ use <custom_spring.scad>
 use <custom_steering_link.scad>
 use <side_damper.scad>
 use <front_body.scad>
+use <servo_arm.scad>
+
+use <biglipo_main-chassie.scad>
 
 
 param1=0;   // must be initalised
@@ -36,10 +39,17 @@ module nose_plate() {
 module main_chassie() { 
     main_chassie_p();
 }
-
+//biglipo_main_chassie();
+module biglipo_main_chassie() { 
+    biglipo_main_chassie_p();
+}
 
 module battery_plate() { 
     battery_plate_p();
+}
+
+module biglipo_battery_plate() { 
+    biglipo_battery_plate_p();
 }
 
 module legacy_body_battery_plate() { 
@@ -139,6 +149,10 @@ module cradle_wingPlate() {
 module cradle_damperMount() {
     rearDamperMount();
     
+}
+
+module cradle_pivotClamp() {
+    pivotClamp();
 }
 //frontwing();
 module frontwing() {
@@ -282,4 +296,8 @@ module front_body_broken() {
 
 module front_mount() {
     front_mount_p();
+}
+
+module servo_arm() {
+    servo_arm_p();
 }
